@@ -1,17 +1,20 @@
 package functionality;
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 public class Picture {
 
-	Image picture;
+	BufferedImage picture;
 	int likes, passes, ID;
-	String gender;
+	String gender,description;
 	
-	Picture(Image picture, int ID, String gender){
+	public Picture(BufferedImage picture, int ID, String gender, int likes, int passes, String des){
 		this.picture = picture;
 		this.ID = ID;
 		this.gender = gender;
+		this.likes = likes;
+		this.passes = passes;
+		this.description = des;
 	}
 	
 	int getID(){
@@ -32,6 +35,10 @@ public class Picture {
 	
 	void increasePasses(){
 		passes++;
+	}
+	
+	public BufferedImage getImage(){
+		return picture;
 	}
 	
 }

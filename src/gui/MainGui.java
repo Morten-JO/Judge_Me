@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.IOException;
 
 public class MainGui extends JFrame implements ActionListener{
 
@@ -25,6 +26,7 @@ public class MainGui extends JFrame implements ActionListener{
 	private String currentGender;
 	private int img2ratio;
 	private int img2height = 500;
+	private Connector connect;
 	
 
 	/**
@@ -56,7 +58,12 @@ public class MainGui extends JFrame implements ActionListener{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+		try {
+			connect = new Connector();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		initialize();
 		this.getRootPane().addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
@@ -134,7 +141,10 @@ public class MainGui extends JFrame implements ActionListener{
 			genderFemaleBtn.setBackground(GuiData.getNeutralColor());
 			genderMaleBtn.setBackground(GuiData.getMaleColor());
 			currentGender = "Male";
-			Picture picy = Connector.selectMale();
+			
+			Picture picy = connect.selectMale();
+			img1 = picy.getImage();
+			updateFrame();
 		} else if(e.getSource() == genderFemaleBtn){
 			genderFemaleBtn.setBackground(GuiData.getFemaleColor());
 			genderMaleBtn.setBackground(GuiData.getNeutralColor());
