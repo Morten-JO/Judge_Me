@@ -172,7 +172,7 @@ public class Connector {
 		return false;
 	}
 	
-	public Boolean UploadPictureBoy (String des, String url){
+	public Boolean uploadPictureBoy (String des, String url){
 		try {
 			sendMsg("upload boy "+des+"\r\n");
 			String result = in.readLine();
@@ -194,7 +194,7 @@ public class Connector {
 		
 	}
 	
-	public Boolean UploadPictureGirl (String des, String url){
+	public Boolean uploadPictureGirl (String des, String url){
 		try {
 			sendMsg("upload girl "+des+"\r\n");
 			String result = in.readLine();
