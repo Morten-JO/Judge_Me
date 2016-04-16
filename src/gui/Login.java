@@ -33,6 +33,8 @@ public class Login {
 	private JTextField textField5;
 	private JTextField textField6;
 	private Connector connecter;
+	
+	private boolean accessConfirmed;
 
 	/**
 	 * Launch the application.
@@ -208,9 +210,18 @@ public class Login {
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				connecter.login(usernameTxtField.getText(), passwordTxtField.getText());
+				accessConfirmed = connecter.login(usernameTxtField.getText(), passwordTxtField.getText());
 				MainGui mg = new MainGui(connecter);
-				mg.setVisible(true);
+				
+				if(accessConfirmed == true) 
+				{
+					frame.dispose();
+					mg.setVisible(true);
+				}
+				else
+				{
+					System.out.println("Could not login");
+				}
 			}
 		});
 		loginButton.setBounds(165, 182, 200, 40);
