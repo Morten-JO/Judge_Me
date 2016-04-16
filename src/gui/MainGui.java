@@ -20,7 +20,7 @@ public class MainGui extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JButton genderMaleBtn, genderFemaleBtn, likeBtn, passBtn;
-	private JLabel profileName, profilePicture, judgingImg;
+	private JLabel profileName, profilePicture, judgingImg, title;
 	private Image img = getProfilePicture();
 	private Image img1 = new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
 	private Image img2;
@@ -39,7 +39,7 @@ public class MainGui extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1100, 700);
 		contentPane = new JPanel();
-		contentPane.setBackground(SystemColor.textHighlight);
+		//contentPane.setBackground(SystemColor.textHighlight);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
@@ -74,6 +74,12 @@ public class MainGui extends JFrame implements ActionListener{
 		genderFemaleBtn.setBackground(GuiData.getNeutralColor());
 		genderFemaleBtn.addActionListener(this);
 		add(genderFemaleBtn);
+		
+		title = new JLabel("Judge Me!");
+		title.setFont(GuiData.getTitleFont());
+		title.setSize(title.getPreferredSize());
+		title.setBackground(GuiData.getNeutralColor());
+		add(title);
 		
 		profilePicture = new JLabel("");
 		profilePicture.setIcon(new ImageIcon(img));
@@ -130,9 +136,17 @@ public class MainGui extends JFrame implements ActionListener{
 			genderFemaleBtn.setBackground(GuiData.getFemaleColor());
 			genderMaleBtn.setBackground(GuiData.getNeutralColor());
 			currentGender = "Female";
+			
+			Picture picy = connector.selectMale();
+			img1 = picy.getImage();
+			updateFrame();
 		} else if(e.getSource() == likeBtn){
 			if(connector.likePicture()){
 				Picture picy = connector.selectMale();
+				img1 = picy.getImage();
+				updateFrame();
+			} else if(e.getSource() == passBtn){
+				Picture picy = connector.selectFemale();
 				img1 = picy.getImage();
 				updateFrame();
 			}
@@ -146,6 +160,8 @@ public class MainGui extends JFrame implements ActionListener{
 		genderMaleBtn.setBounds(10, 10, genderMaleBtn.getWidth(), genderMaleBtn.getHeight());
 		
 		genderFemaleBtn.setBounds(genderMaleBtn.getX() + genderMaleBtn.getWidth(), genderMaleBtn.getY(), genderFemaleBtn.getWidth(), genderFemaleBtn.getHeight());
+		
+		title.setBounds((this.getWidth()-title.getWidth())/2, 10, title.getWidth(), title.getHeight());
 		
 		profilePicture.setBounds(this.getWidth() - profilePicture.getWidth()- 30, 10, profilePicture.getWidth(), profilePicture.getHeight());
 		

@@ -13,6 +13,10 @@ public class GuiData {
 		return new Font("Myanmar Sangam MN", Font.BOLD, 22);
 	}
 	
+	public static Font getTitleFont() {
+		return new Font("Myanmar Sangam MN", Font.BOLD, 36);
+	}
+	
 	public static Font getUserPassFont() {
 		return new Font("Myanmar Sangam MN", Font.BOLD, 18);
 	}
