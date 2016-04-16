@@ -14,6 +14,7 @@ public class ServerClientSender implements Runnable{
 	private Thread thread;
 	private PrintWriter writer;
 	private boolean isrunning;
+	private boolean sendingPicture = false;
 	
 	public ServerClientSender(PrintWriter writer){
 		this.writer = writer;
@@ -29,6 +30,8 @@ public class ServerClientSender implements Runnable{
 	@Override
 	public void run() {
 		while(isrunning){
+			while(sendingPicture){
+			}
 			if(toSendMessages.size() > 0){
 				for(int i = 0; i < toSendMessages.size(); i++){
 					writer.println(toSendMessages.get(0));
@@ -52,10 +55,16 @@ public class ServerClientSender implements Runnable{
 	
 	public void sendPicture(BufferedImage picture, String type, Socket socket){
 		try {
+			sendingPicture = true;
 			ImageIO.write(picture, type, socket.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		sendingPicture = false;
+	}
+	
+	public void fastSend(String s){
+		writer.println(s);
 	}
 	
 }

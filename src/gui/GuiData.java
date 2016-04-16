@@ -9,6 +9,10 @@ public class GuiData {
 //This is a data class witch has all kind of data like fx. different fonts, sizes and stuff like that
 	
 //	The font for our login screen
+	public static Font getHeadlineFont() {
+		return new Font("Myanmar Sangam MN", Font.BOLD, 22);
+	}
+	
 	public static Font getUserPassFont() {
 		return new Font("Myanmar Sangam MN", Font.BOLD, 18);
 	}
@@ -32,5 +36,11 @@ public class GuiData {
 	public static Color getFemaleColor() {
 		return new Color(255,182,193);
 	}
-
+	
+	
+	
+//	Method used to set the space between labels in our login gui
+	public static int getY() {
+		return 60;
+	}
 }

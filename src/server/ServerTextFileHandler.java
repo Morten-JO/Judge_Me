@@ -13,7 +13,8 @@ public class ServerTextFileHandler {
 
 	public static String userDataPath = "serverdata/";
 	public static String imgDataPath = "serverimgdata/";
-	public static String imagepath = "serverimgs/";
+	public static String imageBoypath = "serverimgs/";
+	public static String imageGirlpath = "serverimgsfemale/";
 	
 	private File file;
 	private BufferedReader reader;
@@ -40,7 +41,7 @@ public class ServerTextFileHandler {
 	}
 	
 	public boolean writeToSeverPictureData(ServerPicture picture){
-		String str = picture.getId()+" "+picture.getDescription();
+		String str = picture.getId()+" "+picture.getLikes()+" "+picture.getDislikes()+" "+picture.getGender()+" "+picture.getDescription();
 		try {
 			writer.write(str+"\r\n");
 			return true;
@@ -52,8 +53,8 @@ public class ServerTextFileHandler {
 	
 	public boolean writeToServerDataFile(ServerProfile profile){
 		String str = profile.getName()+" "+profile.getPassword()+" "+profile.getGender()+" "+profile.getEmail();
-		for(int i = 0; i < profile.getReviewedIds().size(); i++){
-			str += " "+profile.getReviewedIds().get(i);
+		for(int i = 0; i < profile.getReviewedPictureIDs().size(); i++){
+			str += " "+profile.getReviewedPictureIDs().get(i);
 		}
 		try {
 			writer.write(str+"\r\n");
@@ -84,7 +85,10 @@ public class ServerTextFileHandler {
 			String str = reader.readLine();
 			String[] parts = str.split(" ");
 			picture.setId(Integer.parseInt(parts[0]));
-			picture.setDescription(str.substring(parts[0].length()+1, str.length()));
+			picture.setLikes(Integer.parseInt(parts[1]));
+			picture.setDislikes(Integer.parseInt(parts[2]));
+			picture.setGender(parts[3]);
+			picture.setDescription(str.substring(parts[0].length()+4+parts[1].length()+parts[2].length()+parts[3].length(), str.length()));
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,10 +111,59 @@ public class ServerTextFileHandler {
 	}
 	
 	public static boolean PictureExist(int id){
-		return new File("serverimgs/"+id+".png").exists();
+		boolean tr = new File("serverimgs/"+id+".png").exists();
+		if(!tr){
+			tr = new File("serverimgsfemale/"+id+".png").exists();
+		}
+		return tr;
 	}
 	
 	public static boolean PictureDataExists(int id){
 		return new File("serverimgdata/"+id+".txt").exists();
+	}
+	
+	public static int[] getListOfBoyIds(){
+		File[] listOfFiles = new File("serverimgs/").listFiles();
+		if(listOfFiles.length == 0){
+			return null;
+		}
+		int[] ids = new int[listOfFiles.length];
+		int i = 0;
+		for(File file : listOfFiles) {
+			if(file.isFile()){
+				ids[i++] = Integer.parseInt(file.getName().substring(0, file.getName().length()-4));
+			}
+		}
+		return ids;
+	}
+	
+	public static int[] getListOfGirlIds(){
+		File[] listOfFiles = new File("serverimgsfemale/").listFiles();
+		if(listOfFiles.length == 0){
+			return null;
+		}
+		int[] ids = new int[listOfFiles.length];
+		int i = 0;
+		for(File file : listOfFiles) {
+			if(file.isFile()){
+				ids[i++] = Integer.parseInt(file.getName().substring(0, file.getName().length()-4));
+			}
+		}
+		return ids;
+	}
+	
+	public static int getFreeId(){
+		File[] listOfFiles = new File("serverimgdata/").listFiles();
+		if(listOfFiles.length == 0){
+			return 1;
+		}
+		int i = 0;
+		int freeId = 1;
+		for(File file : listOfFiles) {
+			if(file.isFile()){
+				freeId++;
+			}
+		}
+		return freeId;
 	}
 }

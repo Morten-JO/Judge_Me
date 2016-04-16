@@ -12,12 +12,14 @@ public class ServerClient implements Runnable{
 	private Socket socket;
 	private ServerClientReader reader;
 	private ServerClientSender sender;
+	private ServerClientActionHandler handler;
 	
 	public ServerClient(Socket socket, BufferedReader reader, PrintWriter writer){
 		this.socket = socket;
 		this.reader = new ServerClientReader(reader);
 		this.sender = new ServerClientSender(writer);
 		this.thread = new Thread(this);
+		handler = new ServerClientActionHandler(this);
 	}
 	
 	public void startThread(){
@@ -31,9 +33,7 @@ public class ServerClient implements Runnable{
 	public void run() {
 		while(isRunning){
 			if(reader.getMessages().size() > 0){
-				for(int i = 0; i < reader.getMessages().size(); i++){
-					System.out.println("Message #"+i+" : "+reader.getMessages().get(i));
-				}
+				handler.HandleAction();
 			}
 			else{
 				try {
@@ -42,6 +42,7 @@ public class ServerClient implements Runnable{
 					e.printStackTrace();
 				}
 			}
+			
 		}
 	}
 	
@@ -55,6 +56,14 @@ public class ServerClient implements Runnable{
 	
 	public void setProfile(ServerProfile prof){
 		this.profile = prof;
+	}
+	
+	public ServerProfile getProfile(){
+		return profile;
+	}
+	
+	public Socket getSocket(){
+		return socket;
 	}
 	
 }
