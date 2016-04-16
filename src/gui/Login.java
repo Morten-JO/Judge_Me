@@ -194,6 +194,14 @@ public class Login {
 		frame.getContentPane().add(passwordTxtField);
 		
 		JButton loginButton = new JButton("Login");
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				frame.dispose();
+				MainGui mg = new MainGui();
+				mg.setVisible(true);
+			}
+		});
 		loginButton.setBounds(165, 182, 200, 40);
 		frame.getContentPane().add(loginButton);
 		
