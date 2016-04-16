@@ -3,7 +3,6 @@ package client;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -173,13 +172,14 @@ public class Connector {
 		return false;
 	}
 	
-	public Picture UploadPictureBoy (String des, String url){
-		
+	public Boolean UploadPictureBoy (String des, String url){
+		boolean res = false;
 		try {
 			sendMsg("upload boy "+des+"\r\n");
 			String result = in.readLine();
 			System.out.println(result);
 			if(result.equals("ok start send")){
+				res = true;
 			BufferedImage image = ImageIO.read(new File(url));
 			 ImageIO.write(image, "png", s.getOutputStream());
 			String sendtres = in.readLine();
@@ -188,7 +188,7 @@ public class Connector {
 				
 			}
 			else if ( sendtres.equals("fail receive")){
-				
+				res = false;
 			}
 			
 				
@@ -197,7 +197,36 @@ public class Connector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return pic;
+		return res;
+		
+	}
+	
+	public Boolean UploadPictureGirl (String des, String url){
+		boolean res = false;
+		try {
+			sendMsg("upload girl "+des+"\r\n");
+			String result = in.readLine();
+			System.out.println(result);
+			if(result.equals("ok start send")){
+				res = true;
+			BufferedImage image = ImageIO.read(new File(url));
+			 ImageIO.write(image, "png", s.getOutputStream());
+			String sendtres = in.readLine();
+			System.out.println(sendtres);
+			if (sendtres.equals("ok receive")){
+				
+			}
+			else if ( sendtres.equals("fail receive")){
+				res = false;
+			}
+			
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
 		
 	}
 	}
