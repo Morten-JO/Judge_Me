@@ -182,7 +182,7 @@ public class MainGui extends JFrame implements ActionListener{
 				} else if(loggedInProfile.getGender() == "Female"){
 					connector.uploadPictureGirl(des, path);
 				}
-				
+				//connector.uploadPictureGirl(des, path);
 			}
 		}
 		
