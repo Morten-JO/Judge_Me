@@ -1,26 +1,31 @@
 package client;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.imageio.ImageIO;
+
+import functionality.Picture;
+
 public class Connector {
 	private Socket s = null; 
 	private DataOutputStream os = null; 
-	private DataInputStream is = null;
+	
 	private BufferedReader in = null;
+	private Picture pic;
 	
 	public Connector() throws IOException{
 		try{
 	s = new Socket("localhost",8888);
 	in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-	  
-	//os = new DataOutputStream(s.getOutputStream());
-	//is = new DataInputStream(s.getInputStream());
+	os = new DataOutputStream(s.getOutputStream());
+
 		}
 		catch(UnknownHostException e){
 			System.err.println("Don't know about host: hostname");
@@ -28,16 +33,13 @@ public class Connector {
 			  System.err.println("Couldn't get I/O for the connection to: hostname");
 		}
 }
-	private boolean connectionOk(){
-		if (s != null && os != null && is != null) return true; 
-		else
-		return false;
-	}
+	
 	
 	public void login(String username, String password){
-		if (connectionOk()){
+		
 			try{
-				os.writeBytes("login "+username+" "+password+"/r /n");
+				os.writeBytes("login "+username+" "+password+"\r\n");
+				System.out.println("Wrote something");
 				String answer = in.readLine();
 				if ( answer ==  "ok login"){
 					System.out.println("login successful");
@@ -53,13 +55,10 @@ public class Connector {
 		
 		
 	}
-		else System.out.println("Connection bad");
-	}
-	
 	public void createUser(String username, String password){
-		if (connectionOk()){
+		
 			try{
-				os.writeBytes("login "+username+" "+password+"/r /n");
+				os.writeBytes("login "+username+" "+password+"\r\n");
 				String answer = in.readLine();
 				if ( answer ==  "ok create"){
 					System.out.println("User is create and login successful");
@@ -77,5 +76,44 @@ public class Connector {
 			}
 		
 				}
+	
+	public void sendMsg (String msg) {
+		try {
+			os.writeBytes(msg);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-}
+	Image picture;
+	int likes, passes, ID;
+	String gender;
+	public Picture selectMale () {
+		
+		sendMsg("picture girl\r\n");
+		try {
+		String info = in.readLine();
+		//String ID = info.split(" ")[2];
+		
+		int id = Integer.parseInt(info.split(" ")[2]);
+		String gender = info.split(" ")[3];
+		int likes = Integer.parseInt(info.split(" ")[4]);
+		int dislikes = Integer.parseInt(info.split(" ")[5]);
+		String des = info.split(" ")[6];
+		
+		 BufferedImage image = ImageIO.read(s.getInputStream());
+		 pic = new Picture (image,id,gender,likes,dislikes,des);
+		 return pic;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void selectFemale () {
+		sendMsg("picture boy\r\n");
+	}
+	
+	}
+
