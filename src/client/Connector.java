@@ -44,12 +44,14 @@ public class Connector {
 				os.writeBytes("login "+username+" "+password+"\r\n");
 				System.out.println("Wrote something");
 				String answer = in.readLine();
-				if ( answer ==  "ok login"){
+				if (answer.equals("ok login")){
 					System.out.println("login successful");
 					result = true;
 				}
-				else System.out.println("Bad login, try again");
-				result = false;
+				else{
+					System.out.println("Bad login, try again");
+					result = false;
+				}
 			}
 		catch (UnknownHostException e) {
             System.err.println("Trying to connect to unknown host: " + e);
