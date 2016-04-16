@@ -124,16 +124,20 @@ public class ServerClientActionHandler {
 			}
 		}
 		else if(message.startsWith("upload")){
+			System.out.println("first thing");
 			String[] mes = message.split(" ");
 			if(mes[1].equals("boy")){
+				System.out.println("got into boy");
 				ServerPicture prof = new ServerPicture(null, ServerPicture.pictureId, "", 0, 0, "male");
 				String desc = message.substring(2+mes[0].length()+mes[1].length(), message.length());
 				prof.setDescription(desc);
+				System.out.println("before start");
 				client.getSender().fastSend("ok start send");
+				System.out.println("sent start");
 				BufferedImage img = client.getReader().receivePicture(client.getSocket());
 				if(img != null){
+					System.out.println("IMAGE IS NOT NULL");
 					prof.setImg(img);
-					client.getSender().fastSend("ok receive");
 					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+prof.getId()+".txt", true);
 					hand.writeToSeverPictureData(prof);
 					hand.close();
@@ -144,10 +148,12 @@ public class ServerClientActionHandler {
 					hand.close();
 				}
 				else{
+					System.out.println("IMAGE IS NULL");
 					client.getSender().fastSend("fail receive");
 				}
 			}
 			else{
+				System.out.println("got into girl");
 				ServerPicture prof = new ServerPicture(null, ServerPicture.pictureId, "", 0, 0, "female");
 				String desc = message.substring(2+mes[0].length()+mes[1].length(), message.length());
 				prof.setDescription(desc);

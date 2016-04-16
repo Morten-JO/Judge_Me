@@ -20,7 +20,7 @@ public class MainGui extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JButton genderMaleBtn, genderFemaleBtn, likeBtn, passBtn;
-	private JLabel profileName, profilePicture, judgingImg, title;
+	private JLabel profileName, profilePicture, judgingImg, title, back;
 	private Image img = getProfilePicture();
 	private Image img1 = new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
 	private Image img2;
@@ -30,6 +30,7 @@ public class MainGui extends JFrame implements ActionListener{
 	private Connector connect;
 	private Profile loggedInProfile;
 	private Connector connector;
+	private Image backimg = new ImageIcon(this.getClass().getResource("/Background.jpg")).getImage();
 
 	/**
 	 * Create the frame.
@@ -57,7 +58,10 @@ public class MainGui extends JFrame implements ActionListener{
 	void initialize(){
 		setLayout(null);
 		
-
+		back = new JLabel("");
+		back.setIcon(new ImageIcon(backimg));
+		back.setSize(back.getPreferredSize());
+		add(back);
 		
 		img2height = this.getHeight() * 65 / 100;
 		
@@ -66,30 +70,32 @@ public class MainGui extends JFrame implements ActionListener{
 		genderMaleBtn.setSize(genderMaleBtn.getPreferredSize());
 		genderMaleBtn.setBackground(GuiData.getNeutralColor());
 		genderMaleBtn.addActionListener(this);
-		add(genderMaleBtn);
+		back.add(genderMaleBtn);
 		
 		genderFemaleBtn = new JButton("Female");
 		genderFemaleBtn.setFont(GuiData.getCornerFont());
 		genderFemaleBtn.setSize(genderFemaleBtn.getPreferredSize());
 		genderFemaleBtn.setBackground(GuiData.getNeutralColor());
 		genderFemaleBtn.addActionListener(this);
-		add(genderFemaleBtn);
+		back.add(genderFemaleBtn);
 		
 		title = new JLabel("Judge Me!");
 		title.setFont(GuiData.getTitleFont());
 		title.setSize(title.getPreferredSize());
+		title.setForeground(GuiData.getTextColor());
 		title.setBackground(GuiData.getNeutralColor());
-		add(title);
+		back.add(title);
 		
 		profilePicture = new JLabel("");
 		profilePicture.setIcon(new ImageIcon(img));
 		profilePicture.setSize(profilePicture.getPreferredSize());
-		add(profilePicture);
+		back.add(profilePicture);
 		
 		profileName = new JLabel("PROFILENAME");
 		profileName.setFont(GuiData.getCornerFont());
 		profileName.setSize(profileName.getPreferredSize());
-		add(profileName);
+		profileName.setForeground(GuiData.getTextColor());
+		back.add(profileName);
 		
 		
 		judgingImg = new JLabel("");
@@ -101,16 +107,16 @@ public class MainGui extends JFrame implements ActionListener{
 		img2 = img1.getScaledInstance(img2height, img2height/img2ratio, Image.SCALE_DEFAULT);
 		judgingImg.setIcon(new ImageIcon(img2));
 		judgingImg.setSize(judgingImg.getPreferredSize());
-		add(judgingImg);
+		back.add(judgingImg);
 			
 		passBtn = new JButton("Pass");
 		passBtn.setBackground(GuiData.getNeutralColor());
-		add(passBtn);
+		back.add(passBtn);
 
 		likeBtn = new JButton("Like");
 		likeBtn.setBackground(GuiData.getNeutralColor());
 		likeBtn.addActionListener(this);
-		add(likeBtn);
+		back.add(likeBtn);
 		
 		
 	}
@@ -155,6 +161,9 @@ public class MainGui extends JFrame implements ActionListener{
 	}
 	
 	void updateFrame(){
+		
+		back.setBounds(0, 0, back.getWidth(), back.getHeight());
+		
 		img2height = this.getHeight() * 65 / 100;
 		
 		genderMaleBtn.setBounds(10, 10, genderMaleBtn.getWidth(), genderMaleBtn.getHeight());

@@ -21,6 +21,10 @@ public class GuiData {
 		return new Font("Myanmar Sangam MN", Font.BOLD, 18);
 	}
 	
+	public static Font getLoginFieldFont() {
+		return new Font("Myanmar Sangam MN", Font.PLAIN, 18);
+	}
+	
 //	The font for the "corner profilepicture text" 
 	public static Font getCornerFont() {
 		return new Font("Myanmar Sangam MN", Font.PLAIN, 14);
@@ -39,6 +43,10 @@ public class GuiData {
 	
 	public static Color getFemaleColor() {
 		return new Color(255,182,193);
+	}
+	
+	public static Color getTextColor(){
+		return new Color(240, 240, 240);
 	}
 	
 	

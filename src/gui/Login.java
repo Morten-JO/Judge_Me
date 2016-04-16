@@ -202,11 +202,13 @@ public class Login {
 		frame.getContentPane().add(password);
 		
 		usernameTxtField = new JTextField();
+		usernameTxtField.setFont(GuiData.getLoginFieldFont());
 		usernameTxtField.setBounds(username.getX() + username.getWidth() + 20, username.getY() - 10, 200, 40);
 		frame.getContentPane().add(usernameTxtField);
 		usernameTxtField.setColumns(10);
 		
 		passwordTxtField = new JPasswordField();
+		passwordTxtField.setFont(GuiData.getLoginFieldFont());
 		passwordTxtField.setBounds(password.getX() + username.getWidth() + 20, password.getY() - 10, 200, 40);
 		frame.getContentPane().add(passwordTxtField);
 		
