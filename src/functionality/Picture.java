@@ -6,10 +6,12 @@ public class Picture {
 
 	Image picture;
 	int likes, passes, ID;
+	String gender;
 	
-	Picture(Image picture, int ID){
+	Picture(Image picture, int ID, String gender){
 		this.picture = picture;
 		this.ID = ID;
+		this.gender = gender;
 	}
 	
 	int getID(){
