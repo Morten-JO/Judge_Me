@@ -36,6 +36,7 @@ public class Login {
 	private JTextField textField5;
 	private JTextField textField6;
 	private Connector connecter;
+	private JLabel loginFail;
 	
 	private boolean accessConfirmed;
 
@@ -210,13 +211,13 @@ public class Login {
 		frame.getContentPane().add(passwordTxtField);
 		
 //		The login fail text
-		final JLabel loginFail = new JLabel("Sorry either you username or password is wrong");
+		loginFail = new JLabel("Sorry either your username or password is wrong");
 		loginFail.setFont(GuiData.getUserPassFont());
-		loginFail.setBackground(Color.red);
 		loginFail.setSize(loginFail.getPreferredSize());
 		loginFail.setBounds(30,20, loginFail.getWidth(), loginFail.getHeight());
-		loginFail.setVisible(false);
 		frame.getContentPane().add(loginFail);
+		loginFail.setVisible(false);
+
 		
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
