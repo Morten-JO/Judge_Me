@@ -53,8 +53,8 @@ public class ServerClient implements Runnable{
 		return reader;
 	}
 	
-	public void setProfile(){
-		
+	public void setProfile(ServerProfile prof){
+		this.profile = prof;
 	}
 	
 }

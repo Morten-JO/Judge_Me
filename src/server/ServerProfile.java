@@ -8,8 +8,15 @@ public class ServerProfile {
 	private String name, password, gender, email;
 	private ArrayList<Integer> reviewedPictureIDs =  new ArrayList<Integer>();
 	
-	public ServerProfile(){
-		
+	public ServerProfile(String name, String password, String gender, String email){
+		this.name = name;
+		this.password = password;
+		this.gender = gender;
+		this.email = email;
+	}
+	
+	public void addReviewPictureID(int id){
+		reviewedPictureIDs.add(id);
 	}
 	
 	public String getName(){
@@ -31,5 +38,30 @@ public class ServerProfile {
 	public ArrayList<Integer> getReviewedIds(){
 		return reviewedPictureIDs;
 	}
+
+	public ArrayList<Integer> getReviewedPictureIDs() {
+		return reviewedPictureIDs;
+	}
+
+	public void setReviewedPictureIDs(ArrayList<Integer> reviewedPictureIDs) {
+		this.reviewedPictureIDs = reviewedPictureIDs;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	
 }
