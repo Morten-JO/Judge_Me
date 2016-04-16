@@ -90,20 +90,24 @@ public class Connector {
 	String gender;
 	public Picture selectMale () {
 		
-		sendMsg("picture girl\r\n");
+		
 		try {
+			sendMsg("picture girl\r\n");
+			String test = in.readLine();
+			if (test == "ok u get picture"){
 		String info = in.readLine();
 		//String ID = info.split(" ")[2];
 		
-		int id = Integer.parseInt(info.split(" ")[2]);
-		String gender = info.split(" ")[3];
-		int likes = Integer.parseInt(info.split(" ")[4]);
-		int dislikes = Integer.parseInt(info.split(" ")[5]);
-		String des = info.split(" ")[6];
+		int id = Integer.parseInt(info.split(" ")[1]);
+		String gender = info.split(" ")[2];
+		int likes = Integer.parseInt(info.split(" ")[3]);
+		int dislikes = Integer.parseInt(info.split(" ")[4]);
+		String des = info.split(" ")[5];
 		
 		 BufferedImage image = ImageIO.read(s.getInputStream());
 		 pic = new Picture (image,id,gender,likes,dislikes,des);
 		 return pic;
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
