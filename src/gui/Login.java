@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -208,6 +209,15 @@ public class Login {
 		passwordTxtField.setBounds(password.getX() + username.getWidth() + 20, password.getY() - 10, 200, 40);
 		frame.getContentPane().add(passwordTxtField);
 		
+//		The login fail text
+		final JLabel loginFail = new JLabel("Sorry either you username or password is wrong");
+		loginFail.setFont(GuiData.getUserPassFont());
+		loginFail.setBackground(Color.red);
+		loginFail.setSize(loginFail.getPreferredSize());
+		loginFail.setBounds(30,20, loginFail.getWidth(), loginFail.getHeight());
+		loginFail.setVisible(false);
+		frame.getContentPane().add(loginFail);
+		
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
@@ -224,7 +234,8 @@ public class Login {
 				}
 				else
 				{
-					System.out.println("Could not login");
+					System.out.println("Could not login either the username or password is wrong");
+					loginFail.setVisible(true);
 				}
 			}
 		});
