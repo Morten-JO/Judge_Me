@@ -1,5 +1,0 @@
-<<<<<<< HEAD
-1 9 0 male test billede for sjov
-=======
-1 10 0 male test billede for sjov
->>>>>>> branch 'master' of https://github.com/Mortenbaws/Judge_Me.git
