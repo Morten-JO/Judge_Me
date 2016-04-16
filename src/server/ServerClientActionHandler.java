@@ -1,6 +1,7 @@
 package server;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class ServerClientActionHandler {
 	
@@ -15,7 +16,7 @@ public class ServerClientActionHandler {
 		if(message.startsWith("login")){
 			String[] parts = message.split(" ");
 			if(ServerTextFileHandler.UserFileExist(parts[1])){
-				ServerTextFileHandler file = new ServerTextFileHandler(ServerTextFileHandler.userDataPath+parts[1]+".txt");
+				ServerTextFileHandler file = new ServerTextFileHandler(ServerTextFileHandler.userDataPath+parts[1]+".txt", false);
 				ServerProfile prof = file.readProfile();
 				if(prof.getName().equals(parts[1]) && prof.getPassword().equals(parts[2])){
 					client.setProfile(prof);
@@ -24,6 +25,7 @@ public class ServerClientActionHandler {
 				else{
 					client.getSender().fastSend("bad login");
 				}
+				file.close();
 			}
 			else{
 				client.getSender().fastSend("bad login");
@@ -32,7 +34,7 @@ public class ServerClientActionHandler {
 		else if(message.startsWith("create")){
 			String[] parts = message.split(" ");
 			if(!ServerTextFileHandler.UserFileExist(parts[1])){
-				ServerTextFileHandler file = new ServerTextFileHandler(ServerTextFileHandler.userDataPath+parts[1]+".txt");
+				ServerTextFileHandler file = new ServerTextFileHandler(ServerTextFileHandler.userDataPath+parts[1]+".txt", true);
 				ServerProfile prof = new ServerProfile(parts[1], parts[2], parts[3], parts[4]);
 				if(parts[2].length() < 6){
 					client.getSender().fastSend("bad password create");
@@ -42,6 +44,7 @@ public class ServerClientActionHandler {
 				else{
 					client.getSender().fastSend("bad name create");
 				}
+				file.close();
 			}
 			else{
 				client.getSender().fastSend("bad name create");
@@ -67,10 +70,11 @@ public class ServerClientActionHandler {
 						break;
 					}
 				}
-				ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imageBoypath+idToReview+".png");
+				ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imageBoypath+idToReview+".png", false);
 				ServerPicture pic = new ServerPicture(null, 0, null, 0, 0, null);
 				hand.readServerPicture(pic);
-				hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+idToReview+".txt");
+				hand.close();
+				hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+idToReview+".txt", false);
 				hand.readServerPictureData(pic);
 				if(freereview){
 					client.getSender().fastSend("ok u get picture");
@@ -81,6 +85,7 @@ public class ServerClientActionHandler {
 				else{
 					client.getSender().fastSend("ok u get no picture");
 				}
+				hand.close();
 			}
 			else if(message.contains("girl")){
 				int[] ids = ServerTextFileHandler.getListOfGirlIds();
@@ -99,10 +104,11 @@ public class ServerClientActionHandler {
 						break;
 					}
 				}
-				ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imageGirlpath+idToReview+".png");
+				ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imageGirlpath+idToReview+".png", false);
 				ServerPicture pic = new ServerPicture(null, 0, null, 0, 0, null);
 				hand.readServerPicture(pic);
-				hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+idToReview+".txt");
+				hand.close();
+				hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+idToReview+".txt", false);
 				hand.readServerPictureData(pic);
 				if(freereview){
 					client.getSender().fastSend("ok u get picture");
@@ -113,6 +119,7 @@ public class ServerClientActionHandler {
 				else{
 					client.getSender().fastSend("ok u get no picture");
 				}
+				hand.close();
 			}
 		}
 		else if(message.startsWith("upload")){
@@ -126,12 +133,14 @@ public class ServerClientActionHandler {
 				if(img != null){
 					prof.setImg(img);
 					client.getSender().fastSend("ok receive");
-					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+prof.getId()+".txt");
+					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+prof.getId()+".txt", true);
 					hand.writeToSeverPictureData(prof);
-					hand = new ServerTextFileHandler(ServerTextFileHandler.imageBoypath+prof.getId()+".png");
+					hand.close();
+					hand = new ServerTextFileHandler(ServerTextFileHandler.imageBoypath+prof.getId()+".png", true);
 					hand.writeToServerPicture(prof, "png");
 					client.getSender().fastSend("ok receive");
 					ServerPicture.pictureId++;
+					hand.close();
 				}
 				else{
 					client.getSender().fastSend("fail receive");
@@ -146,12 +155,14 @@ public class ServerClientActionHandler {
 				if(img != null){
 					prof.setImg(img);
 					client.getSender().fastSend("ok receive");
-					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+prof.getId()+".txt");
+					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+prof.getId()+".txt", true);
 					hand.writeToSeverPictureData(prof);
-					hand = new ServerTextFileHandler(ServerTextFileHandler.imageGirlpath+prof.getId()+".png");
+					hand.close();
+					hand = new ServerTextFileHandler(ServerTextFileHandler.imageGirlpath+prof.getId()+".png", true);
 					hand.writeToServerPicture(prof, "png");
 					client.getSender().fastSend("ok receive");
 					ServerPicture.pictureId++;
+					hand.close();
 				}
 				else{
 					client.getSender().fastSend("fail receive");
@@ -170,12 +181,15 @@ public class ServerClientActionHandler {
 					}
 				}
 				if(!isAlreadyReviewed){
-					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+id+".txt");
+					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+id+".txt", false);
 					ServerPicture pic = new ServerPicture(null, 0, null, 0, 0, null);
 					hand.readServerPictureData(pic);
 					pic.setLikes(pic.getLikes()+1);
+					hand.close();
+					hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+id+".txt", true);
 					hand.writeToSeverPictureData(pic);
 					client.getSender().fastSend("liked ok");
+					hand.close();
 				}
 				else{
 					client.getSender().fastSend("liked fail");
@@ -196,10 +210,12 @@ public class ServerClientActionHandler {
 					}
 				}
 				if(!isAlreadyReviewed){
-					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+id+".txt");
+					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+id+".txt", false);
 					ServerPicture pic = new ServerPicture(null, 0, null, 0, 0, null);
 					hand.readServerPictureData(pic);
 					pic.setLikes(pic.getLikes()-1);
+					hand.close();
+					hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+id+".txt", true);
 					hand.writeToSeverPictureData(pic);
 					client.getSender().fastSend("disliked ok");
 				}

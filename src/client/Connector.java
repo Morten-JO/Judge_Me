@@ -1,6 +1,6 @@
 package client;
 
-import java.awt.Image;
+
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -35,17 +35,19 @@ public class Connector {
 }
 	
 	
-	public void login(String username, String password){
-		
+	public boolean login(String username, String password){
+		boolean result = false;
 			try{
 				os.writeBytes("login "+username+" "+password+"\r\n");
 				System.out.println("Wrote something");
 				String answer = in.readLine();
 				if ( answer ==  "ok login"){
 					System.out.println("login successful");
+					result = true;
 				}
 				else System.out.println("Bad login, try again");
-				
+				result = false;
+				in.readLine();
 			}
 		catch (UnknownHostException e) {
             System.err.println("Trying to connect to unknown host: " + e);
@@ -53,14 +55,14 @@ public class Connector {
             System.err.println("IOException:  " + e);
 		}
 		
-		
+		return result;
 	}
-	public void createUser(String username, String password){
+	public void createUser(String username, String password, String gender, String email){
 		
 			try{
-				os.writeBytes("login "+username+" "+password+"\r\n");
+				os.writeBytes("create "+username+" "+password+" "+gender+" "+email+"\r\n");
 				String answer = in.readLine();
-				if ( answer ==  "ok create"){
+				if (answer ==  "ok create"){
 					System.out.println("User is create and login successful");
 				}
 					else if ( answer == "bad name create") {
@@ -85,28 +87,26 @@ public class Connector {
 			e.printStackTrace();
 		}
 	}
-	Image picture;
-	int likes, passes, ID;
-	String gender;
+	
+	
 	public Picture selectMale () {
-		
-		
 		try {
-			sendMsg("picture girl\r\n");
+			sendMsg("picture boy\r\n");
 			String test = in.readLine();
-			if (test == "ok u get picture"){
-		String info = in.readLine();
-		//String ID = info.split(" ")[2];
-		
-		int id = Integer.parseInt(info.split(" ")[1]);
-		String gender = info.split(" ")[2];
-		int likes = Integer.parseInt(info.split(" ")[3]);
-		int dislikes = Integer.parseInt(info.split(" ")[4]);
-		String des = info.split(" ")[5];
-		
-		 BufferedImage image = ImageIO.read(s.getInputStream());
-		 pic = new Picture (image,id,gender,likes,dislikes,des);
-		 return pic;
+			System.out.println("test: "+test);
+			if (test.startsWith("ok")){
+				String info = in.readLine();
+				
+				int id = Integer.parseInt(info.split(" ")[1]);
+				String gender = info.split(" ")[2];
+				int likes = Integer.parseInt(info.split(" ")[3]);
+				int dislikes = Integer.parseInt(info.split(" ")[4]);
+				String des = info.split(" ")[5];
+				
+				BufferedImage image = ImageIO.read(s.getInputStream());
+				pic = new Picture (image,id,gender,likes,dislikes,des);
+				in.readLine();
+				return pic;
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -115,9 +115,31 @@ public class Connector {
 		return null;
 	}
 	
-	public void selectFemale () {
-		sendMsg("picture boy\r\n");
+	public Picture selectFemale () {
+		try {
+			sendMsg("picture girl\r\n");
+			String test = in.readLine();
+			if (test.startsWith("ok")){
+				String info = in.readLine();
+				
+				int id = Integer.parseInt(info.split(" ")[1]);
+				String gender = info.split(" ")[2];
+				int likes = Integer.parseInt(info.split(" ")[3]);
+				int dislikes = Integer.parseInt(info.split(" ")[4]);
+				String des = info.split(" ")[5];
+				
+				BufferedImage image = ImageIO.read(s.getInputStream());
+				pic = new Picture (image,id,gender,likes,dislikes,des);
+				in.readLine(); 
+				return pic;
+		}
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return null;
+}
 	}
 	
-	}
+	
 
