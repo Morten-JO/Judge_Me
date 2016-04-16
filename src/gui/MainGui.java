@@ -134,7 +134,7 @@ public class MainGui extends JFrame implements ActionListener{
 			genderFemaleBtn.setBackground(GuiData.getNeutralColor());
 			genderMaleBtn.setBackground(GuiData.getMaleColor());
 			currentGender = "Male";
-			//Picture picy = Connector.selectMale();
+			Picture picy = Connector.selectMale();
 		} else if(e.getSource() == genderFemaleBtn){
 			genderFemaleBtn.setBackground(GuiData.getFemaleColor());
 			genderMaleBtn.setBackground(GuiData.getNeutralColor());
