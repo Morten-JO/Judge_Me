@@ -1,11 +1,12 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import client.Connector;
+import functionality.Picture;
 
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -121,7 +122,6 @@ public class MainGui extends JFrame implements ActionListener{
 	}
 	
 	private Image getProfilePicture() {
-		// TODO Auto-generated method stub
 		Image img =  new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
 		img = img.getScaledInstance(60, 60, Image.SCALE_DEFAULT);
 		return img;
@@ -130,12 +130,11 @@ public class MainGui extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getSource() == genderMaleBtn){
 			genderFemaleBtn.setBackground(GuiData.getNeutralColor());
 			genderMaleBtn.setBackground(GuiData.getMaleColor());
 			currentGender = "Male";
-			
+			//Picture picy = Connector.selectMale();
 		} else if(e.getSource() == genderFemaleBtn){
 			genderFemaleBtn.setBackground(GuiData.getFemaleColor());
 			genderMaleBtn.setBackground(GuiData.getNeutralColor());
