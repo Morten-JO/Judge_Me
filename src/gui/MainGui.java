@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 
 import client.Connector;
 import functionality.Picture;
+import functionality.Profile;
 
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,7 @@ public class MainGui extends JFrame implements ActionListener{
 	private int img2ratio;
 	private int img2height = 500;
 	private Connector connect;
+	private Profile loggedInProfile;
 	
 
 	/**
@@ -171,6 +173,10 @@ public class MainGui extends JFrame implements ActionListener{
 		
 		passBtn.setBounds(judgingImg.getX(), judgingImg.getY() + judgingImg.getHeight() + 15, judgingImg.getWidth()/2, judgingImg.getHeight()/8);
 		likeBtn.setBounds(judgingImg.getX() + judgingImg.getWidth()/2, judgingImg.getY() + judgingImg.getHeight() + 15, judgingImg.getWidth()/2, judgingImg.getHeight()/8);
+	}
+	
+	void setLoggedInProfile(Profile profile){
+		loggedInProfile = profile;
 	}
 	
 }
