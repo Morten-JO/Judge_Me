@@ -41,6 +41,10 @@ public class GuiData {
 		return new Color(255,182,193);
 	}
 	
+	public static Color getTextColor(){
+		return new Color(240, 240, 240);
+	}
+	
 	
 	
 //	Method used to set the space between labels in our login gui
