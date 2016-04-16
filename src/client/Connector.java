@@ -176,13 +176,12 @@ public class Connector {
 	public Picture UploadPictureBoy (String des, String url){
 		
 		try {
-			sendMsg("upload boy"+des);
+			sendMsg("upload boy "+des+"\r\n");
 			String result = in.readLine();
 			System.out.println(result);
 			if(result.equals("ok start send")){
-			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 			BufferedImage image = ImageIO.read(new File(url));
-			 ImageIO.write(image, "jpg", byteArrayOutputStream);
+			 ImageIO.write(image, "png", s.getOutputStream());
 			String sendtres = in.readLine();
 			System.out.println(sendtres);
 			if (sendtres.equals("ok receive")){
