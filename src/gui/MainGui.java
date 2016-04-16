@@ -15,9 +15,10 @@ public class MainGui extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JButton genderMaleBtn, genderFemaleBtn;
-	private JLabel profileName, profilePicture;
+	private JLabel profileName, profilePicture, judgingImg;
 	private Image img = getProfilePicture();
-	private Image judgingImg;
+	private Image img2 = new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
+	private String currentGender;
 	
 
 	/**
@@ -60,6 +61,7 @@ public class MainGui extends JFrame implements ActionListener{
 		genderMaleBtn.setFont(GuiData.getCornerFont());
 		genderMaleBtn.setSize(genderMaleBtn.getPreferredSize());
 		genderMaleBtn.setBounds(10, 10, genderMaleBtn.getWidth(), genderMaleBtn.getHeight());
+		genderMaleBtn.setBackground(GuiData.getNeutralColor());
 		genderMaleBtn.addActionListener(this);
 		add(genderMaleBtn);
 		
@@ -67,6 +69,7 @@ public class MainGui extends JFrame implements ActionListener{
 		genderFemaleBtn.setFont(GuiData.getCornerFont());
 		genderFemaleBtn.setSize(genderFemaleBtn.getPreferredSize());
 		genderFemaleBtn.setBounds(genderMaleBtn.getX() + genderMaleBtn.getWidth(), genderMaleBtn.getY(), genderFemaleBtn.getWidth(), genderFemaleBtn.getHeight());
+		genderFemaleBtn.setBackground(GuiData.getNeutralColor());
 		genderFemaleBtn.addActionListener(this);
 		add(genderFemaleBtn);
 		
@@ -81,6 +84,12 @@ public class MainGui extends JFrame implements ActionListener{
 		profileName.setSize(profileName.getPreferredSize());
 		profileName.setBounds(profilePicture.getX() - profileName.getWidth() - 15, profilePicture.getY() + (profilePicture.getHeight()-profileName.getHeight())/2, profileName.getWidth(), profileName.getHeight());
 		add(profileName);
+		
+		img2 = img2.getScaledInstance(200, 400, Image.SCALE_DEFAULT);
+		judgingImg = new JLabel("");
+		judgingImg.setIcon(new ImageIcon(img2));
+		judgingImg.setSize(judgingImg.getPreferredSize());
+		judgingImg.setBounds((this.getWidth()-judgingImg.getWidth())/2, y, width, height);
 	}
 	
 	private Image getProfilePicture() {
@@ -97,9 +106,11 @@ public class MainGui extends JFrame implements ActionListener{
 		if(e.getSource() == genderMaleBtn){
 			genderFemaleBtn.setBackground(GuiData.getNeutralColor());
 			genderMaleBtn.setBackground(GuiData.getMaleColor());
+			currentGender = "Male";
 		} else if(e.getSource() == genderFemaleBtn){
-			genderFemaleBtn.setBackground(GuiData.getNeutralColor());
-			genderMaleBtn.setBackground(GuiData.getMaleColor());
+			genderFemaleBtn.setBackground(GuiData.getFemaleColor());
+			genderMaleBtn.setBackground(GuiData.getNeutralColor());
+			currentGender = "Female";
 		}
 		
 	}
