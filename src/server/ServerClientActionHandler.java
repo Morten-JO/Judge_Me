@@ -189,6 +189,7 @@ public class ServerClientActionHandler {
 					hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+id+".txt", true);
 					hand.writeToSeverPictureData(pic);
 					client.getSender().fastSend("liked ok");
+					client.getProfile().addReviewPictureID(id);
 					hand.close();
 				}
 				else{
@@ -217,6 +218,7 @@ public class ServerClientActionHandler {
 					hand.close();
 					hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+id+".txt", true);
 					hand.writeToSeverPictureData(pic);
+					client.getProfile().addReviewPictureID(id);
 					client.getSender().fastSend("disliked ok");
 				}
 				else{
