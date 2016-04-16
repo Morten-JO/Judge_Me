@@ -219,38 +219,12 @@ public class Login {
 //		The login fail text
 		loginFail = new JLabel("Sorry either your username or password is wrong");
 		loginFail.setFont(GuiData.getCornerFont());
-		loginFail.setBackground(Color.red);
+		loginFail.setForeground(Color.red);
 		loginFail.setSize(loginFail.getPreferredSize());
-		loginFail.setBounds(30,20, loginFail.getWidth(), loginFail.getHeight());
+		loginFail.setBounds(passwordTxtField.getX(),20, loginFail.getWidth(), loginFail.getHeight());
 		frame.getContentPane().add(loginFail);
 		loginFail.setVisible(false);
 
-		
-		loginButton = new JButton("Login");
-		loginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
-				
-				System.out.println(passwordTxtField.getText());
-				accessConfirmed = connecter.login(usernameTxtField.getText(), passwordTxtField.getText());
-				MainGui mg = new MainGui(connecter);
-				
-				if(accessConfirmed == true) 
-				{
-					frame.dispose();
-					mg.setVisible(true);
-				}
-				else
-				{
-					System.out.println("Could not login either the username or password is wrong");
-					loginFail.setVisible(true);
-					passwordTxtField.setText("");
-				}
-			}
-		});
-		loginButton.setBounds(165, 182, 200, 40);
-		frame.getContentPane().add(loginButton);
-		
 		btnCreateAccount = new JButton("Create account");
 		btnCreateAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
@@ -262,8 +236,39 @@ public class Login {
 				loginButton.setVisible(false);
 			}
 		});
-		btnCreateAccount.setBounds(35, 182, 130, 40);
+		btnCreateAccount.setBounds(passwordTxtField.getX(), 182, 130, 40);
 		frame.getContentPane().add(btnCreateAccount);
+		
+		loginButton = new JButton("Login");
+		loginButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				
+				System.out.println(passwordTxtField.getText());
+				accessConfirmed = connecter.login(usernameTxtField.getText(), passwordTxtField.getText());
+				MainGui mg = new MainGui(connecter);
+				
+				if(!usernameTxtField.getText().isEmpty() && !passwordTxtField.getText().isEmpty()) 
+				{	
+				
+					if(accessConfirmed == true) 
+					{
+						frame.dispose();
+						mg.setVisible(true);
+					}
+					else
+					{
+						System.out.println("Could not login either the username or password is wrong");
+						loginFail.setVisible(true);
+						passwordTxtField.setText("");
+					}
+				
+				}
+			}
+		});
+		loginButton.setBounds(btnCreateAccount.getX() + btnCreateAccount.getWidth(), 182, 200, 40);
+		frame.getContentPane().add(loginButton);
+		
 	
 	}
 }
