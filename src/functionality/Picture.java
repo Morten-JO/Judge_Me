@@ -17,23 +17,23 @@ public class Picture {
 		this.description = des;
 	}
 	
-	int getID(){
+	public int getID(){
 		return ID;
 	}
 	
-	int getLikes(){
+	public int getLikes(){
 		return likes;
 	}
 	
-	int getPasses(){
+	public int getPasses(){
 		return passes;
 	}
 	
-	void increaseLikes(){
+	public void increaseLikes(){
 		likes++;
 	}
 	
-	void increasePasses(){
+	public void increasePasses(){
 		passes++;
 	}
 	

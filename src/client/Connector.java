@@ -47,7 +47,6 @@ public class Connector {
 				}
 				else System.out.println("Bad login, try again");
 				result = false;
-				in.readLine();
 			}
 		catch (UnknownHostException e) {
             System.err.println("Trying to connect to unknown host: " + e);
@@ -138,7 +137,38 @@ public class Connector {
 		e.printStackTrace();
 	}
 	return null;
-}
+	}
+	
+	public boolean likePicture(){
+		sendMsg("like "+pic.getID()+"\r\n");
+		String res;
+		try {
+			res = in.readLine();
+			if(res.equals("liked ok")){
+				System.out.println("Just liked picture: "+pic.getID());
+				return true;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean dislikePicture(){
+		sendMsg("dislike "+pic.getID()+"\r\n");
+		String res;
+		try {
+			res = in.readLine();
+			if(res.equals("disliked ok")){
+				return true;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	
 	}
 	
 	

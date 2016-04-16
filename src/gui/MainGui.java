@@ -103,6 +103,7 @@ public class MainGui extends JFrame implements ActionListener{
 
 		likeBtn = new JButton("Like");
 		likeBtn.setBackground(GuiData.getNeutralColor());
+		likeBtn.addActionListener(this);
 		add(likeBtn);
 		
 		
@@ -129,6 +130,12 @@ public class MainGui extends JFrame implements ActionListener{
 			genderFemaleBtn.setBackground(GuiData.getFemaleColor());
 			genderMaleBtn.setBackground(GuiData.getNeutralColor());
 			currentGender = "Female";
+		} else if(e.getSource() == likeBtn){
+			if(connector.likePicture()){
+				Picture picy = connector.selectMale();
+				img1 = picy.getImage();
+				updateFrame();
+			}
 		}
 		
 	}
