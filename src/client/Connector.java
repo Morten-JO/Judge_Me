@@ -3,11 +3,14 @@ package client;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
 
 import javax.imageio.ImageIO;
 
@@ -168,7 +171,34 @@ public class Connector {
 		return false;
 	}
 	
-	
+	public Picture UploadPictureBoy (String des, String url){
+		
+		try {
+			sendMsg("upload boy"+des);
+			String result = in.readLine();
+			System.out.println(result);
+			if(result.equals("ok start send")){
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			BufferedImage image = ImageIO.read(new File(url));
+			 ImageIO.write(image, "jpg", byteArrayOutputStream);
+			String sendtres = in.readLine();
+			System.out.println(sendtres);
+			if (sendtres.equals("ok receive")){
+				
+			}
+			else if ( sendtres.equals("fail receive")){
+				
+			}
+			
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pic;
+		
+	}
 	}
 	
 	
