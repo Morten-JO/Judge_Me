@@ -173,7 +173,7 @@ public class Connector {
 		return false;
 	}
 	
-	public Picture UploadPictureBoy (String des, String url){
+	public boolean UploadPictureBoy (String des, String url){
 		
 		try {
 			sendMsg("upload boy "+des+"\r\n");
@@ -185,22 +185,16 @@ public class Connector {
 			String sendtres = in.readLine();
 			System.out.println(sendtres);
 			if (sendtres.equals("ok receive")){
-				
+				return true;
 			}
-			else if ( sendtres.equals("fail receive")){
-				
-			}
-			
-				
-			}
+		}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return pic;
-		
+		return false;
 	}
-	}
+}
 	
 	
 
