@@ -244,12 +244,12 @@ public class Login {
 			public void actionPerformed(ActionEvent e)
 			{
 				
-				System.out.println(passwordTxtField.getText());
-				accessConfirmed = connecter.login(usernameTxtField.getText(), passwordTxtField.getText());
-				MainGui mg = new MainGui(connecter);
 				
 				if(!usernameTxtField.getText().isEmpty() && !passwordTxtField.getText().isEmpty()) 
 				{	
+					System.out.println(passwordTxtField.getText());
+					accessConfirmed = connecter.login(usernameTxtField.getText(), passwordTxtField.getText());
+					MainGui mg = new MainGui(connecter);
 				
 					if(accessConfirmed == true) 
 					{
