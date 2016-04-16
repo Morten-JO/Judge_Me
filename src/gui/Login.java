@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import client.Connector;
+import server.ServerRun;
+import server.ServerStart;
 
 import javax.swing.JPasswordField;
 import java.awt.Font;
@@ -210,6 +212,8 @@ public class Login {
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				
+				System.out.println(passwordTxtField.getText());
 				accessConfirmed = connecter.login(usernameTxtField.getText(), passwordTxtField.getText());
 				MainGui mg = new MainGui(connecter);
 				
