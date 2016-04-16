@@ -4,6 +4,7 @@ import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import client.Connector;
 import functionality.Picture;
@@ -14,12 +15,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.File;
 import java.io.IOException;
 
 public class MainGui extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
-	private JButton genderMaleBtn, genderFemaleBtn, likeBtn, passBtn;
+	private JButton genderMaleBtn, genderFemaleBtn, likeBtn, passBtn, browse;
 	private JLabel profileName, profilePicture, judgingImg, title, back;
 	private Image img = getProfilePicture();
 	private Image img1 = new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
@@ -49,7 +51,6 @@ public class MainGui extends JFrame implements ActionListener{
 		this.getRootPane().addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
 				// This is only called when the user releases the mouse button.
-				contentPane.repaint();
 				updateFrame();
 			}
 		});
@@ -57,6 +58,8 @@ public class MainGui extends JFrame implements ActionListener{
 
 	void initialize(){
 		setLayout(null);
+		
+		loggedInProfile = new Profile("NAVN", "GENDER", "MAIL");
 		
 		back = new JLabel("");
 		back.setIcon(new ImageIcon(backimg));
@@ -97,7 +100,11 @@ public class MainGui extends JFrame implements ActionListener{
 		profileName.setForeground(GuiData.getTextColor());
 		back.add(profileName);
 		
-		
+		browse = new JButton("Browse");
+		browse.setSize(browse.getPreferredSize());
+		browse.addActionListener(this);
+		back.add(browse);
+			
 		judgingImg = new JLabel("");
 		judgingImg.setIcon(new ImageIcon(img1));
 		judgingImg.setSize(judgingImg.getPreferredSize());
@@ -130,6 +137,7 @@ public class MainGui extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		updateFrame();
 		if(e.getSource() == genderMaleBtn){
 			genderFemaleBtn.setBackground(GuiData.getNeutralColor());
 			genderMaleBtn.setBackground(GuiData.getMaleColor());
@@ -156,15 +164,34 @@ public class MainGui extends JFrame implements ActionListener{
 				img1 = picy.getImage();
 				updateFrame();
 			}
+		} else if(e.getSource() == browse){
+			JFileChooser file = new JFileChooser();
+			file.setCurrentDirectory(new File(System.getProperty("user.home")));
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg");
+			file.addChoosableFileFilter(filter);
+			int result = file.showSaveDialog(null);
+			if(result == JFileChooser.APPROVE_OPTION){
+				File selectedFile = file.getSelectedFile();
+				String path = selectedFile.getAbsolutePath();
+				System.out.println(path);
+				
+				String des = JOptionPane.showInputDialog(this, "What Sholud the description for your picture be?", null);
+				
+				if(loggedInProfile.getGender() == "Male"){
+					connector.uploadPictureBoy(des, path);
+				} else if(loggedInProfile.getGender() == "Female"){
+					connector.uploadPictureGirl(des, path);
+				}
+				
+			}
 		}
 		
 	}
-	
+
 	void updateFrame(){
 		
 		back.setBounds(0, 0, back.getWidth(), back.getHeight());
 		
-		img2height = this.getHeight() * 65 / 100;
 		
 		genderMaleBtn.setBounds(10, 10, genderMaleBtn.getWidth(), genderMaleBtn.getHeight());
 		
@@ -176,13 +203,16 @@ public class MainGui extends JFrame implements ActionListener{
 		
 		profileName.setBounds(profilePicture.getX() - profileName.getWidth() - 15, profilePicture.getY() + (profilePicture.getHeight()-profileName.getHeight())/2, profileName.getWidth(), profileName.getHeight());
 		
+		browse.setBounds(profilePicture.getX() + profilePicture.getWidth() - browse.getWidth(), profilePicture.getY() + profilePicture.getHeight() + 10, browse.getWidth(), browse.getHeight());
+		
+		img2height = (this.getHeight() - (browse.getY() + browse.getHeight())) * 75 / 100;
 		img2 = img1.getScaledInstance(img2height, img2height/img2ratio, Image.SCALE_SMOOTH);
 		judgingImg.setIcon(new ImageIcon(img2));
 		judgingImg.setSize(judgingImg.getPreferredSize());
-		judgingImg.setBounds((this.getWidth() - judgingImg.getWidth())/2, (this.getHeight() - judgingImg.getHeight())/10*4, judgingImg.getHeight(), judgingImg.getHeight());
+		judgingImg.setBounds((this.getWidth() - judgingImg.getWidth())/2, browse.getY() + browse.getHeight() + 15, judgingImg.getHeight(), judgingImg.getHeight());
 		
-		passBtn.setBounds(judgingImg.getX(), judgingImg.getY() + judgingImg.getHeight() + 15, judgingImg.getWidth()/2, judgingImg.getHeight()/8);
-		likeBtn.setBounds(judgingImg.getX() + judgingImg.getWidth()/2, judgingImg.getY() + judgingImg.getHeight() + 15, judgingImg.getWidth()/2, judgingImg.getHeight()/8);
+		passBtn.setBounds(judgingImg.getX(), judgingImg.getY() + judgingImg.getHeight() + this.getHeight()*2/150, judgingImg.getWidth()/2, judgingImg.getHeight()/8);
+		likeBtn.setBounds(judgingImg.getX() + judgingImg.getWidth()/2, passBtn.getY(), judgingImg.getWidth()/2, judgingImg.getHeight()/8);
 	}
 	
 	void setLoggedInProfile(Profile profile){

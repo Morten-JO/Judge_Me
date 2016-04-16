@@ -7,38 +7,32 @@ import java.util.List;
 public class Profile {
 	
 	String profileName, password, gender, mail;
-	Image profilePicture;
 	List<Picture> pictures = new ArrayList<Picture>();
 	List<Integer> reviewedPictureIDs =  new ArrayList<Integer>();
 	
-	Profile(String profileName, Image profilePicture, String gender, String mail){
+	public Profile(String profileName, String gender, String mail){
 		this.profileName = profileName;
-		this.profilePicture = profilePicture;
 		this.gender = gender;
 		this.mail = mail;
 	}
 	
-	String getProfileName(){
+	public String getProfileName(){
 		return profileName;
 	}
 	
-	Image getProfilePicture(){
-		return profilePicture;
-	}
-	
-	String getGender(){
+	public String getGender(){
 		return gender;
 	}
 	
-	String getMail(){
+	public String getMail(){
 		return mail;
 	}
 	
-	List<Picture> getPictures(){
+	public List<Picture> getPictures(){
 		return pictures;
 	}
 	
-	List<Integer> getPictureIDs(){
+	public List<Integer> getPictureIDs(){
 		List<Integer> pictureIDs =  new ArrayList<Integer>();
 		for(Picture picture : pictures){
 			pictureIDs.add(picture.getID());
@@ -46,7 +40,7 @@ public class Profile {
 		return pictureIDs;
 	}
 	
-	List<Integer> getReviewedPictureIDs(){
+	public List<Integer> getReviewedPictureIDs(){
 		return reviewedPictureIDs;
 	}
 	
