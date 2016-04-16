@@ -25,5 +25,21 @@ public class ServerPicture {
 	public String getDescription(){
 		return description;
 	}
+
+	public BufferedImage getImg() {
+		return img;
+	}
+
+	public void setImg(BufferedImage img) {
+		this.img = img;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	
 }

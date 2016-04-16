@@ -1,7 +1,5 @@
 package server;
 
-import java.net.Socket;
-
 public class ServerClientActionHandler {
 	
 	private ServerClient client;
@@ -13,7 +11,18 @@ public class ServerClientActionHandler {
 	public void HandleAction(){
 		String message = client.getReader().readOldest();
 		if(message.startsWith("login")){
-			
+			String[] parts = message.split(" ");
+			if(ServerTextFileHandler.UserFileExist(parts[1])){
+				ServerTextFileHandler file = new ServerTextFileHandler(ServerTextFileHandler.userDataPath+parts[1]+".txt");
+				ServerProfile prof = file.readProfile();
+				if(prof.getName().equals(parts[1]) && prof.getPassword().equals(parts[2])){
+					client.setProfile(prof);
+					client.getSender().addMessage("ok login");
+				}
+				else{
+					client.getSender().addMessage("bad login");
+				}
+			}
 		}
 		else if(message.startsWith("create")){
 			
