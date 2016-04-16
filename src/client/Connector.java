@@ -92,9 +92,12 @@ public class Connector {
 		
 		
 		try {
+			login("kristofer", "testpass");
 			sendMsg("picture girl\r\n");
 			String test = in.readLine();
-			if (test == "ok u get picture"){
+			System.out.println("test: "+test);
+			if (test.startsWith("ok")){
+				System.out.println("suck it bitch");
 		String info = in.readLine();
 		//String ID = info.split(" ")[2];
 		
