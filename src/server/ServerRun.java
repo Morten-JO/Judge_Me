@@ -38,7 +38,9 @@ public class ServerRun implements Runnable{
 				Socket sock = mainSocket.accept();
 				BufferedReader reader = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 				PrintWriter writer = new PrintWriter(sock.getOutputStream(), true);
-				clients.add(new ServerClient(sock, reader, writer));
+				ServerClient cli = new ServerClient(sock, reader, writer);
+				clients.add(cli);
+				cli.startThread();
 				System.out.println("Client added with IP: "+sock.getRemoteSocketAddress());
 			} catch (IOException e) {
 				e.printStackTrace();

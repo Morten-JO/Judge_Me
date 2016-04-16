@@ -1,6 +1,8 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.SystemColor;
 
 public class GuiData {
 	
@@ -14,6 +16,21 @@ public class GuiData {
 //	The font for the "corner profilepicture text" 
 	public static Font getCornerFont() {
 		return new Font("Myanmar Sangam MN", Font.PLAIN, 14);
+	}
+	
+	
+
+//	These 3 methods sets the collor of women, men and neutral for the corner button
+	public static Color getNeutralColor() {
+		return new Color(192,192,192);
+	}
+	
+	public static Color getMaleColor() {
+		return new Color(135,206,250);
+	}
+	
+	public static Color getFemaleColor() {
+		return new Color(255,182,193);
 	}
 
 }
