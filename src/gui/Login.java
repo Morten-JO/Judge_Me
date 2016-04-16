@@ -23,6 +23,11 @@ public class Login {
 	private JPasswordField passwordTxtField;
 	private static JPanel panel;
 	private JTextField textField1;
+	private JTextField textField2;
+	private JTextField textField3;
+	private JTextField textField4;
+	private JTextField textField5;
+	private JTextField textField6;
 
 	/**
 	 * Launch the application.
@@ -59,10 +64,10 @@ public class Login {
 	
 		panel = new JPanel();
 		panel.setBounds(0, 0, 450, 600);
+		panel.setBackground(SystemColor.textHighlight);
 		panel.setLayout(null);
 		frame.getContentPane().add(panel);
 
-		
 		JLabel headline = new JLabel("Create new account");
 		headline.setFont(GuiData.getHeadlineFont());
 		headline.setSize(headline.getPreferredSize());
@@ -105,17 +110,56 @@ public class Login {
 		Age.setBounds(newUsername.getX(), confirmEmail.getY() + GuiData.getY(), Age.getWidth(), Age.getHeight());
 		panel.add(Age);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Do you accept our policy?");
-		chckbxNewCheckBox.setBounds(newUsername.getX(), Age.getY() + 40, 204, 23);
-		panel.add(chckbxNewCheckBox);
 		
 		textField1 = new JTextField();
-		textField1.setBounds(210, 95, 204, 30);
+		textField1.setBounds(210, 90, 200, 40);
 		panel.add(textField1);
 		textField1.setColumns(10);
 		
+		textField2 = new JTextField();
+		textField2.setBounds(textField1.getX(), textField1.getY() + GuiData.getY(), 200, 40);
+		panel.add(textField2);
+		textField2.setColumns(10);
 		
+		textField3 = new JTextField();
+		textField3.setBounds(textField1.getX(), textField2.getY() + GuiData.getY(), 200, 40);
+		panel.add(textField3);
+		textField3.setColumns(10);
+		
+		textField4 = new JTextField();
+		textField4.setBounds(textField1.getX(), textField3.getY() + GuiData.getY(), 200, 40);
+		panel.add(textField4);
+		textField4.setColumns(10);
+		
+		textField5 = new JTextField();
+		textField5.setBounds(textField1.getX(), textField4.getY() + GuiData.getY(), 200, 40);
+		panel.add(textField5);
+		textField5.setColumns(10);
+		
+		textField6 = new JTextField();
+		textField6.setBounds(textField1.getX(), textField5.getY() + GuiData.getY(), 200, 40);
+		panel.add(textField6);
+		textField6.setColumns(10);
 
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Do you accept our policy?");
+		chckbxNewCheckBox.setBounds(125, Age.getY() + GuiData.getY(), 200, 23);
+		panel.add(chckbxNewCheckBox);
+		
+		JButton backButton = new JButton("Back");
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				panel.setVisible(false);
+				frame.setBounds(100, 100, 450, 300);
+			}
+		});
+		backButton.setBounds(newUsername.getX(), chckbxNewCheckBox.getY() + GuiData.getY() - 10, 180, 50);
+		panel.add(backButton);
+		
+		JButton createButton = new JButton("Create");
+		createButton.setBounds(newUsername.getX() + backButton.getWidth() + 10, chckbxNewCheckBox.getY() + GuiData.getY() - 10, 180, 50);
+		panel.add(createButton);
+		
 		panel.setVisible(false);
 		
 		
