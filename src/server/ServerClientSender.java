@@ -27,6 +27,11 @@ public class ServerClientSender implements Runnable{
 		thread.start();
 	}
 	
+	public void close(){
+		isrunning = false;
+		writer.close();
+	}
+	
 	@Override
 	public void run() {
 		while(isrunning){

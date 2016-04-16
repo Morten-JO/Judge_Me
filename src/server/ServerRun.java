@@ -44,6 +44,7 @@ public class ServerRun implements Runnable{
 				System.out.println("Client added with IP: "+sock.getRemoteSocketAddress());
 			} catch (IOException e) {
 				e.printStackTrace();
+				System.out.println("that crash doges");
 			}
 			
 		}

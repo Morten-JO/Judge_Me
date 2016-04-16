@@ -27,6 +27,15 @@ public class ServerClientReader implements Runnable{
 		thread.start();
 	}
 	
+	public void close(){
+		isrunning = false;
+		try {
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void run() {
 		while(isrunning){

@@ -70,22 +70,23 @@ public class ServerClientActionHandler {
 						break;
 					}
 				}
-				ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imageBoypath+idToReview+".png", false);
-				ServerPicture pic = new ServerPicture(null, 0, null, 0, 0, null);
-				hand.readServerPicture(pic);
-				hand.close();
-				hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+idToReview+".txt", false);
-				hand.readServerPictureData(pic);
 				if(freereview){
+					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imageBoypath+idToReview+".png", false);
+					ServerPicture pic = new ServerPicture(null, 0, null, 0, 0, null);
+					hand.readServerPicture(pic);
+					hand.close();
+					hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+idToReview+".txt", false);
+					hand.readServerPictureData(pic);
 					client.getSender().fastSend("ok u get picture");
 					client.getSender().fastSend("pictureinformation "+pic.getId()+" "+pic.getGender()+" "+pic.getLikes()+" "+pic.getDislikes()+" "+pic.getDescription()+" startpicturesend");
 					client.getSender().sendPicture(pic.getImage(), "png", client.getSocket());
 					client.getSender().fastSend("endpicturesend");
+					hand.close();
 				}
 				else{
 					client.getSender().fastSend("ok u get no picture");
 				}
-				hand.close();
+				
 			}
 			else if(message.contains("girl")){
 				int[] ids = ServerTextFileHandler.getListOfGirlIds();
@@ -104,22 +105,22 @@ public class ServerClientActionHandler {
 						break;
 					}
 				}
-				ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imageGirlpath+idToReview+".png", false);
-				ServerPicture pic = new ServerPicture(null, 0, null, 0, 0, null);
-				hand.readServerPicture(pic);
-				hand.close();
-				hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+idToReview+".txt", false);
-				hand.readServerPictureData(pic);
 				if(freereview){
+					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imageGirlpath+idToReview+".png", false);
+					ServerPicture pic = new ServerPicture(null, 0, null, 0, 0, null);
+					hand.readServerPicture(pic);
+					hand.close();
+					hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+idToReview+".txt", false);
+					hand.readServerPictureData(pic);
 					client.getSender().fastSend("ok u get picture");
 					client.getSender().fastSend("pictureinformation "+pic.getId()+" "+pic.getGender()+" "+pic.getLikes()+" "+pic.getDislikes()+" "+pic.getDescription()+" startpicturesend");
 					client.getSender().sendPicture(pic.getImage(), "png", client.getSocket());
 					client.getSender().fastSend("endpicturesend");
+					hand.close();
 				}
 				else{
 					client.getSender().fastSend("ok u get no picture");
 				}
-				hand.close();
 			}
 		}
 		else if(message.startsWith("upload")){
@@ -191,6 +192,9 @@ public class ServerClientActionHandler {
 					client.getSender().fastSend("liked ok");
 					client.getProfile().addReviewPictureID(id);
 					hand.close();
+					hand = new ServerTextFileHandler(ServerTextFileHandler.userDataPath+client.getProfile().getName()+".txt", true);
+					hand.writeToServerDataFile(client.getProfile());
+					hand.close();
 				}
 				else{
 					client.getSender().fastSend("liked fail");
@@ -220,6 +224,10 @@ public class ServerClientActionHandler {
 					hand.writeToSeverPictureData(pic);
 					client.getProfile().addReviewPictureID(id);
 					client.getSender().fastSend("disliked ok");
+					hand.close();
+					hand = new ServerTextFileHandler(ServerTextFileHandler.userDataPath+client.getProfile().getName()+".txt", true);
+					hand.writeToServerDataFile(client.getProfile());
+					hand.close();
 				}
 				else{
 					client.getSender().fastSend("disliked fail");

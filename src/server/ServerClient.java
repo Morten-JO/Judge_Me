@@ -1,6 +1,7 @@
 package server;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -24,9 +25,27 @@ public class ServerClient implements Runnable{
 	
 	public void startThread(){
 		reader.startThread();
+		System.out.println("o");
 		sender.startThread();
+		System.out.println("wot");
 		isRunning = true;
-		thread.run();
+		System.out.println("ok");
+		thread.start();
+		System.out.println("oh");
+	}
+	
+	public void closeEverything(){
+		reader.close();
+		sender.close();
+		isRunning = false;
+		try {
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.userDataPath, true);
+		hand.writeToServerDataFile(this.profile);
+		
 	}
 
 	@Override
