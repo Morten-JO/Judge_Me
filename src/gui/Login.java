@@ -6,12 +6,16 @@ import javax.swing.JFrame;
 import java.awt.SystemColor;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import client.Connector;
+
 import javax.swing.JPasswordField;
 import java.awt.Font;
 import java.awt.Panel;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
@@ -28,6 +32,7 @@ public class Login {
 	private JTextField textField4;
 	private JTextField textField5;
 	private JTextField textField6;
+	private Connector connecter;
 
 	/**
 	 * Launch the application.
@@ -49,6 +54,12 @@ public class Login {
 	 * Create the application.
 	 */
 	public Login() {
+		try {
+			connecter = new Connector();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		initialize();
 	}
 
@@ -197,8 +208,8 @@ public class Login {
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				frame.dispose();
-				MainGui mg = new MainGui();
+				connecter.login(usernameTxtField.getText(), passwordTxtField.getText());
+				MainGui mg = new MainGui(connecter);
 				mg.setVisible(true);
 			}
 		});
@@ -209,6 +220,7 @@ public class Login {
 		btnCreateAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				
 				frame.setBounds(100, 100, 450, 600);
 				panel.setVisible(true);
 			}

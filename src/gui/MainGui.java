@@ -29,30 +29,13 @@ public class MainGui extends JFrame implements ActionListener{
 	private int img2height = 500;
 	private Connector connect;
 	private Profile loggedInProfile;
-	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainGui frame = new MainGui();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private Connector connector;
 
 	/**
 	 * Create the frame.
 	 */
 	
-	public MainGui() {
+	public MainGui(Connector connector) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1100, 700);
 		contentPane = new JPanel();
@@ -60,12 +43,7 @@ public class MainGui extends JFrame implements ActionListener{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		try {
-			connect = new Connector();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			this.connector = connector;
 		initialize();
 		this.getRootPane().addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
@@ -144,7 +122,7 @@ public class MainGui extends JFrame implements ActionListener{
 			genderMaleBtn.setBackground(GuiData.getMaleColor());
 			currentGender = "Male";
 			
-			Picture picy = connect.selectMale();
+			Picture picy = connector.selectMale();
 			img1 = picy.getImage();
 			updateFrame();
 		} else if(e.getSource() == genderFemaleBtn){
