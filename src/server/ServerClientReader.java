@@ -1,8 +1,12 @@
 package server;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 public class ServerClientReader implements Runnable{
 
@@ -10,6 +14,7 @@ public class ServerClientReader implements Runnable{
 	private Thread thread;
 	private BufferedReader reader;
 	private boolean isrunning;
+	private boolean isReceivingPicture = false;
 	
 	public ServerClientReader(BufferedReader reader){
 		this.reader = reader;
@@ -25,8 +30,13 @@ public class ServerClientReader implements Runnable{
 	@Override
 	public void run() {
 		while(isrunning){
+			while(isReceivingPicture){
+				
+			}
 			try {
-				receivedMessages.add(reader.readLine());
+				if(reader.ready()){
+					receivedMessages.add(reader.readLine());
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -43,7 +53,15 @@ public class ServerClientReader implements Runnable{
 		return receivedMessages;
 	}
 	
-	public ServerPicture receivePicture(){
-		return null;
+	public BufferedImage receivePicture(Socket socket){
+		isReceivingPicture = true;
+		BufferedImage img = null;
+		try {
+			img = ImageIO.read(socket.getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		isReceivingPicture = false;
+		return img;
 	}
 }

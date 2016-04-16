@@ -1,11 +1,11 @@
 package server;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ServerProfile {
 	
 	private String name, password, gender, email;
+	
 	private ArrayList<Integer> reviewedPictureIDs =  new ArrayList<Integer>();
 	
 	public ServerProfile(String name, String password, String gender, String email){
@@ -35,9 +35,6 @@ public class ServerProfile {
 		return email;
 	}
 	
-	public ArrayList<Integer> getReviewedIds(){
-		return reviewedPictureIDs;
-	}
 
 	public ArrayList<Integer> getReviewedPictureIDs() {
 		return reviewedPictureIDs;
