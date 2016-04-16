@@ -37,6 +37,8 @@ public class Login {
 	private JTextField textField6;
 	private Connector connecter;
 	private JLabel loginFail;
+	private JButton btnCreateAccount;
+	private JButton loginButton;
 	
 	private boolean accessConfirmed;
 
@@ -168,6 +170,8 @@ public class Login {
 			{
 				panel.setVisible(false);
 				frame.setBounds(100, 100, 450, 300);
+				btnCreateAccount.setVisible(true);
+				loginButton.setVisible(true);
 			}
 		});
 		backButton.setBounds(newUsername.getX(), chckbxNewCheckBox.getY() + GuiData.getY() - 10, 180, 50);
@@ -214,14 +218,15 @@ public class Login {
 		
 //		The login fail text
 		loginFail = new JLabel("Sorry either your username or password is wrong");
-		loginFail.setFont(GuiData.getUserPassFont());
+		loginFail.setFont(GuiData.getCornerFont());
+		loginFail.setBackground(Color.red);
 		loginFail.setSize(loginFail.getPreferredSize());
 		loginFail.setBounds(30,20, loginFail.getWidth(), loginFail.getHeight());
 		frame.getContentPane().add(loginFail);
 		loginFail.setVisible(false);
 
 		
-		JButton loginButton = new JButton("Login");
+		loginButton = new JButton("Login");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -239,22 +244,25 @@ public class Login {
 				{
 					System.out.println("Could not login either the username or password is wrong");
 					loginFail.setVisible(true);
+					passwordTxtField.setText("");
 				}
 			}
 		});
 		loginButton.setBounds(165, 182, 200, 40);
 		frame.getContentPane().add(loginButton);
 		
-		JButton btnCreateAccount = new JButton("Create account");
+		btnCreateAccount = new JButton("Create account");
 		btnCreateAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
 				
 				frame.setBounds(100, 100, 450, 600);
 				panel.setVisible(true);
+				btnCreateAccount.setVisible(false);
+				loginButton.setVisible(false);
 			}
 		});
-		btnCreateAccount.setBounds(35, 182, 120, 40);
+		btnCreateAccount.setBounds(35, 182, 130, 40);
 		frame.getContentPane().add(btnCreateAccount);
 	
 	}
