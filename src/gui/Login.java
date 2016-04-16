@@ -264,6 +264,10 @@ public class Login {
 					}
 				
 				}
+				else
+				{
+					System.out.println("Thefields can not be empty");
+				}
 			}
 		});
 		loginButton.setBounds(btnCreateAccount.getX() + btnCreateAccount.getWidth(), 182, 200, 40);
