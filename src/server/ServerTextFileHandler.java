@@ -20,11 +20,17 @@ public class ServerTextFileHandler {
 	private BufferedReader reader;
 	private BufferedWriter writer;
 	
-	public ServerTextFileHandler(String path){
+	public ServerTextFileHandler(String path, boolean write){
 		try{
 			file = new File(path);
-			reader = new BufferedReader(new FileReader(file));
-			writer = new BufferedWriter(new FileWriter(file));
+			if(write){
+				writer = new BufferedWriter(new FileWriter(file));
+			}
+			else{
+				reader = new BufferedReader(new FileReader(file));
+			}
+			
+			
 		} catch(IOException e){
 			e.printStackTrace();
 		}
@@ -165,5 +171,21 @@ public class ServerTextFileHandler {
 			}
 		}
 		return freeId;
+	}
+	
+	public void close(){
+		if(writer == null){
+			try {
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
