@@ -229,6 +229,59 @@ public class Connector {
 		return pic;
 		
 	}
+	
+	public void PicturesIds (){
+		sendMsg("idprofile");
+		String result = null;
+		try {
+			result = in.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for (int i = 0; i <  Integer.parseInt(result.split(" ")[0]); i++) {
+			String ok = null;
+			try {
+				ok = in.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if ( ok.equals("ok u get picture")){
+				String info = null;
+				BufferedImage image = null; 
+				try {
+					info = in.readLine();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				int id = Integer.parseInt(info.split(" ")[1]);
+				String gender = info.split(" ")[2];
+				int likes = Integer.parseInt(info.split(" ")[3]);
+				int dislikes = Integer.parseInt(info.split(" ")[4]);
+				String des = info.split(" ")[5];
+				
+				
+				try {
+					image = ImageIO.read(s.getInputStream());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				pic = new Picture (image,id,gender,likes,dislikes,des);
+				try {
+					in.readLine();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
 }
 	
 	
