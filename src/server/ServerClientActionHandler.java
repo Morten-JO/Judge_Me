@@ -242,6 +242,31 @@ public class ServerClientActionHandler {
 				client.getSender().fastSend("disliked fail");
 			}
 		}
+		else if(message.startsWith("idprofile")){
+			client.getSender().fastSend(client.getProfile().getOwnUploadedArrayList().size()+" pictures");
+			for(int i = 0; i < client.getProfile().getOwnUploadedArrayList().size(); i++){
+				if(ServerTextFileHandler.PictureExist(client.getProfile().getOwnUploadedArrayList().get(i))){
+					String firstpath = "";
+					if(ServerTextFileHandler.PictureIsGirl(client.getProfile().getOwnUploadedArrayList().get(i))){
+						firstpath = ServerTextFileHandler.imageGirlpath;
+					}
+					else{
+						firstpath = ServerTextFileHandler.imageBoypath;
+					}
+					ServerTextFileHandler hand = new ServerTextFileHandler(firstpath+client.getProfile().getOwnUploadedArrayList().get(i)+".png", false);
+					ServerPicture pic = new ServerPicture(null, 0, null, 0, 0, null);
+					hand.readServerPicture(pic);
+					hand.close();
+					hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+client.getProfile().getOwnUploadedArrayList().get(i)+".txt", false);
+					hand.readServerPictureData(pic);
+					client.getSender().fastSend("ok u get picture");
+					client.getSender().fastSend("pictureinformation "+pic.getId()+" "+pic.getGender()+" "+pic.getLikes()+" "+pic.getDislikes()+" "+pic.getDescription()+" startpicturesend");
+					client.getSender().sendPicture(pic.getImage(), "png", client.getSocket());
+					client.getSender().fastSend("endpicturesend");
+					hand.close();
+				}
+			}
+		}
 	}
 	
 }
