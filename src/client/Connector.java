@@ -99,7 +99,7 @@ public class Connector {
 			sendMsg("picture boy\r\n");
 			String test = in.readLine();
 			System.out.println("test: "+test);
-			if (test.startsWith("ok")){
+			if (test.equals("ok u get picture")){
 				String info = in.readLine();
 				res = true;
 				int id = Integer.parseInt(info.split(" ")[1]);
@@ -127,7 +127,7 @@ public class Connector {
 		try {
 			sendMsg("picture girl\r\n");
 			String test = in.readLine();
-			if (test.startsWith("ok")){
+			if (test.equals("ok u get picture")){
 				String info = in.readLine();
 				res = true;
 				int id = Integer.parseInt(info.split(" ")[1]);
