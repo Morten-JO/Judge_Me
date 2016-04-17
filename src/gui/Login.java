@@ -87,7 +87,7 @@ public class Login {
 		panel.setBackground(SystemColor.textHighlight);
 		panel.setLayout(null);
 		frame.getContentPane().add(panel);
-
+		
 		JLabel headline = new JLabel("Create new account");
 		headline.setFont(GuiData.getHeadlineFont());
 		headline.setSize(headline.getPreferredSize());
