@@ -60,25 +60,26 @@ public class Connector {
 		
 		return result;
 	}
-	public void createUser(String username, String password, String gender, String email){
-		
+	public String createUser(String username, String password, String gender, String email){
+			String back = null;
 			try{
 				os.writeBytes("create "+username+" "+password+" "+gender+" "+email+"\r\n");
 				String answer = in.readLine();
 				if (answer ==  "ok create"){
-					System.out.println("User is create and login successful");
+					back ="User is create and login successful";
 				}
 					else if ( answer == "bad name create") {
-						System.out.println("user already exists");
+						back ="user already exists";
 					}
 					else if ( answer == "bad password create"){
-						System.out.println("password to weak");
+						back = "password to weak";
 					}
 						
 			}
 			catch (IOException e){
 				   System.err.println("IOException:  " + e);
 			}
+			return back;
 		
 				}
 	
@@ -149,6 +150,8 @@ public class Connector {
 	}
 	
 	public boolean likePicture(){
+		
+		if (pic != null){
 		sendMsg("like "+pic.getID()+"\r\n");
 		String res;
 		try {
@@ -160,10 +163,13 @@ public class Connector {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		}
 		return false;
-	}
+		
+		}
 	
 	public boolean dislikePicture(){
+		if (pic != null){
 		sendMsg("dislike "+pic.getID()+"\r\n");
 		String res;
 		try {
@@ -173,6 +179,7 @@ public class Connector {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
 		}
 		return false;
 	}
