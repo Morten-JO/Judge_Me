@@ -179,6 +179,7 @@ public class MainGui extends JFrame implements ActionListener{
 			currentGender = "Male";
 			if(connector.selectMale()){				
 				Picture picy = connector.getPicture();
+				mdes.setText(picy.getDes());
 				img1 = picy.getImage();
 			}
 			updateFrame();
@@ -303,21 +304,25 @@ public class MainGui extends JFrame implements ActionListener{
 	void checkAndSelectMale(){
 		if(connector.selectMale()){
 			Picture picy = connector.getPicture();
+			mdes.setText(picy.getDes());
 			img1 = picy.getImage();
+			updateFrame();
 		}
 	}
 	
 	void checkAndSelectFemale(){
 		if(connector.selectFemale()){
 			Picture picy = connector.getPicture();
+			mdes.setText(picy.getDes());
 			img1 = picy.getImage();
+			updateFrame();
 		}
 	}
 	
 	void checkAndSelect(){
-		if(currentGender == "Male"){
-			checkAndSelectFemale();
-		}else if(currentGender == "Female"){
+		if(currentGender.equals("Male")){
+			checkAndSelectMale();
+		}else if(currentGender.equals("Female")){
 			checkAndSelectFemale();
 		}
 	}

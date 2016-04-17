@@ -129,7 +129,6 @@ public class Connector {
 				in.readLine();
 				
 			}
-			res = false;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -202,12 +201,18 @@ public class Connector {
 	
 	public Boolean uploadPictureBoy (String des, String url){
 		try {
+			System.out.println("firat");
 			sendMsg("upload boy "+des+"\r\n");
+			System.out.println("second");
 			String result = in.readLine();
+			System.out.println("third");
 			System.out.println(result);
 			if(result.equals("ok start send")){
+				System.out.println("fourth");
 				BufferedImage image = ImageIO.read(new File(url));
+				System.out.println("five");
 				 ImageIO.write(image, "png", s.getOutputStream());
+				 System.out.println("six");
 				String sendtres = in.readLine();
 				System.out.println(sendtres);
 				if (sendtres.equals("ok receive")){

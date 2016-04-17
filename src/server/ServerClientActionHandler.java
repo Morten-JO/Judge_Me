@@ -3,6 +3,8 @@ package server;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+
 public class ServerClientActionHandler {
 	
 	private ServerClient client;
@@ -136,7 +138,6 @@ public class ServerClientActionHandler {
 				System.out.println("sent start");
 				BufferedImage img = client.getReader().receivePicture(client.getSocket());
 				if(img != null){
-					System.out.println("IMAGE IS NOT NULL");
 					prof.setImg(img);
 					ServerTextFileHandler hand = new ServerTextFileHandler(ServerTextFileHandler.imgDataPath+prof.getId()+".txt", true);
 					hand.writeToSeverPictureData(prof);
@@ -150,9 +151,9 @@ public class ServerClientActionHandler {
 					hand = new ServerTextFileHandler(ServerTextFileHandler.userDataPath+client.getProfile().getName()+".txt", true);
 					hand.writeToServerDataFile(client.getProfile());
 					hand.close();
+					System.out.println("FIN");
 				}
 				else{
-					System.out.println("IMAGE IS NULL");
 					client.getSender().fastSend("fail receive");
 				}
 			}
