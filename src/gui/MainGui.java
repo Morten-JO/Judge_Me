@@ -191,6 +191,7 @@ public class MainGui extends JFrame implements ActionListener{
 
 	void updateFrame(){
 		
+		
 		back.setBounds(0, 0, back.getWidth(), back.getHeight());
 		
 		

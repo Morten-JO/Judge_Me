@@ -221,11 +221,11 @@ public class Login {
 		loginFail.setFont(GuiData.getCornerFont());
 		loginFail.setForeground(Color.red);
 		loginFail.setSize(loginFail.getPreferredSize());
-		loginFail.setBounds(passwordTxtField.getX(),20, loginFail.getWidth(), loginFail.getHeight());
+		loginFail.setBounds(password.getX(),20, loginFail.getWidth(), loginFail.getHeight());
 		frame.getContentPane().add(loginFail);
 		loginFail.setVisible(false);
 
-		btnCreateAccount = new JButton("Create account");
+		btnCreateAccount = new JButton("Create Profile");
 		btnCreateAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
@@ -236,7 +236,7 @@ public class Login {
 				loginButton.setVisible(false);
 			}
 		});
-		btnCreateAccount.setBounds(passwordTxtField.getX(), 182, 130, 40);
+		btnCreateAccount.setBounds(password.getX(), password.getY() + password.getHeight() + 20, passwordTxtField.getX() - password.getX() - 10, 40);
 		frame.getContentPane().add(btnCreateAccount);
 		
 		loginButton = new JButton("Login");
@@ -270,7 +270,7 @@ public class Login {
 				}
 			}
 		});
-		loginButton.setBounds(btnCreateAccount.getX() + btnCreateAccount.getWidth(), 182, 200, 40);
+		loginButton.setBounds(passwordTxtField.getX(), btnCreateAccount.getY(), passwordTxtField.getWidth(), 40);
 		frame.getContentPane().add(loginButton);
 		
 	
