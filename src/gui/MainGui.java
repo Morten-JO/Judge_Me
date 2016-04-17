@@ -137,13 +137,14 @@ public class MainGui extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		updateFrame();
+		
 		if(e.getSource() == genderMaleBtn){
 			
 			genderFemaleBtn.setBackground(GuiData.getNeutralColor());
 			genderMaleBtn.setBackground(GuiData.getMaleColor());
 			currentGender = "Male";
-			
 			if(connector.selectMale()){				
 				Picture picy = connector.getPicture();
 				img1 = picy.getImage();
@@ -155,26 +156,24 @@ public class MainGui extends JFrame implements ActionListener{
 			genderFemaleBtn.setBackground(GuiData.getFemaleColor());
 			genderMaleBtn.setBackground(GuiData.getNeutralColor());
 			currentGender = "Female";
-			
 			if(connector.selectFemale()){
 				Picture picy = connector.getPicture();
 				img1 = picy.getImage();
 			}
 			updateFrame();
+			
 		} else if(e.getSource() == likeBtn){
+		
 			if(connector.likePicture()){
-				
-				//LIKE
-				
+				connector.likePicture();
 				checkAndSelect();
-				
 			} else if(e.getSource() == passBtn){
-				
-				//pass
-				
+				connector.dislikePicture();
 				checkAndSelect();
 			}
+			
 		} else if(e.getSource() == browse){
+			
 			JFileChooser file = new JFileChooser();
 			file.setCurrentDirectory(new File(System.getProperty("user.home")));
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("Images","jpg");
