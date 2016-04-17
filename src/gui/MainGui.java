@@ -40,7 +40,7 @@ public class MainGui extends JFrame implements ActionListener{
 	
 	public MainGui(Connector connector) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1100, 700);
+		setBounds(100, 100, 700, 700);
 		contentPane = new JPanel();
 		//contentPane.setBackground(SystemColor.textHighlight);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -139,30 +139,40 @@ public class MainGui extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		updateFrame();
 		if(e.getSource() == genderMaleBtn){
+			
 			genderFemaleBtn.setBackground(GuiData.getNeutralColor());
 			genderMaleBtn.setBackground(GuiData.getMaleColor());
 			currentGender = "Male";
 			
-			Picture picy = connector.selectMale();
-			img1 = picy.getImage();
+			if(connector.selectMale()){				
+				Picture picy = connector.getPicture();
+				img1 = picy.getImage();
+			}
 			updateFrame();
+			
 		} else if(e.getSource() == genderFemaleBtn){
+			
 			genderFemaleBtn.setBackground(GuiData.getFemaleColor());
 			genderMaleBtn.setBackground(GuiData.getNeutralColor());
 			currentGender = "Female";
 			
-			Picture picy = connector.selectMale();
-			img1 = picy.getImage();
+			if(connector.selectFemale()){
+				Picture picy = connector.getPicture();
+				img1 = picy.getImage();
+			}
 			updateFrame();
 		} else if(e.getSource() == likeBtn){
 			if(connector.likePicture()){
-				Picture picy = connector.selectMale();
-				img1 = picy.getImage();
-				updateFrame();
+				
+				//LIKE
+				
+				checkAndSelect();
+				
 			} else if(e.getSource() == passBtn){
-				Picture picy = connector.selectFemale();
-				img1 = picy.getImage();
-				updateFrame();
+				
+				//pass
+				
+				checkAndSelect();
 			}
 		} else if(e.getSource() == browse){
 			JFileChooser file = new JFileChooser();
@@ -221,4 +231,25 @@ public class MainGui extends JFrame implements ActionListener{
 		loggedInProfile = profile;
 	}
 	
+	void checkAndSelectMale(){
+		if(connector.selectMale()){
+			Picture picy = connector.getPicture();
+			img1 = picy.getImage();
+		}
+	}
+	
+	void checkAndSelectFemale(){
+		if(connector.selectFemale()){
+			Picture picy = connector.getPicture();
+			img1 = picy.getImage();
+		}
+	}
+	
+	void checkAndSelect(){
+		if(currentGender == "Male"){
+			checkAndSelectFemale();
+		}else if(currentGender == "Female"){
+			checkAndSelectFemale();
+		}
+	}
 }
