@@ -53,7 +53,8 @@ public class MainGui extends JFrame implements ActionListener{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-			this.connector = connector;
+		this.connector = connector;
+		loggedInProfile = connector.profileOfLogin();	
 		initializeMain();
 		initializeProfile();
 		this.getRootPane().addComponentListener(new ComponentAdapter() {
@@ -66,8 +67,6 @@ public class MainGui extends JFrame implements ActionListener{
 
 	void initializeMain(){
 		setLayout(null);
-		
-		loggedInProfile = new Profile("NAVN", "GENDER", "MAIL");
 		
 		back = new JLabel("");
 		back.setIcon(new ImageIcon(backimg));
@@ -98,11 +97,15 @@ public class MainGui extends JFrame implements ActionListener{
 		back.add(title);
 		
 		profilePicture = new JLabel("");
-		profilePicture.setIcon(new ImageIcon(img));
-		profilePicture.setSize(profilePicture.getPreferredSize());
+		if(loggedInProfile.getGender() == "Male"){
+			profilePicture.setBackground(GuiData.getMaleColor());
+		}else if(loggedInProfile.getGender() == "Female"){
+			profilePicture.setBackground(GuiData.getFemaleColor());
+		}
+		profilePicture.setSize(60, 60);
 		back.add(profilePicture);
 		
-		profileName = new JLabel("PROFILENAME");
+		profileName = new JLabel(loggedInProfile.getProfileName());
 		profileName.setFont(GuiData.getCornerFont());
 		profileName.setSize(profileName.getPreferredSize());
 		profileName.setForeground(GuiData.getTextColor());
@@ -214,7 +217,6 @@ public class MainGui extends JFrame implements ActionListener{
 				} else if(loggedInProfile.getGender() == "Female"){
 					connector.uploadPictureGirl(des, path);
 				}
-				//connector.uploadPictureGirl(des, path);
 			}
 		} else if(e.getSource() == backBtnp){
 			
@@ -318,11 +320,15 @@ public class MainGui extends JFrame implements ActionListener{
 		backp.setVisible(false);
 		
 		profilePicturep = new JLabel("");
-		profilePicturep.setIcon(new ImageIcon(img));
-		profilePicturep.setSize(profilePicturep.getPreferredSize());
+		if(loggedInProfile.getGender() == "Male"){
+			profilePicturep.setBackground(GuiData.getMaleColor());
+		}else if(loggedInProfile.getGender() == "Female"){
+			profilePicturep.setBackground(GuiData.getFemaleColor());
+		}
+		profilePicturep.setSize(60, 60);
 		backp.add(profilePicturep);
 		
-		profileNamep = new JLabel("PROFILENAME");
+		profileNamep = new JLabel(loggedInProfile.getProfileName());
 		profileNamep.setFont(GuiData.getCornerFont());
 		profileNamep.setSize(profileNamep.getPreferredSize());
 		profileNamep.setForeground(GuiData.getTextColor());
