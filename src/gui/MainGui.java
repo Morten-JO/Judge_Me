@@ -143,7 +143,7 @@ public class MainGui extends JFrame implements ActionListener{
 			
 		mdes = new JLabel();
 		mdes.setForeground(GuiData.getTextColor());
-		mdes.setFont(GuiData.getCornerFont());
+		mdes.setFont(GuiData.getUserPassFont());
 		mdes.setBounds(judgingImg.getX(), judgingImg.getY() - 30, 200, 20);
 		back.add(mdes);
 		
@@ -226,6 +226,9 @@ public class MainGui extends JFrame implements ActionListener{
 				} else if(loggedInProfile.getGender().toLowerCase().equals("female")){
 					connector.uploadPictureGirl(des, path);
 				}
+				
+				pictureIDs = connector.PicturesIds();
+				
 			}
 		} else if(e.getSource() == backBtnp){
 			
@@ -277,7 +280,8 @@ public class MainGui extends JFrame implements ActionListener{
 		judgingImg.setSize(judgingImg.getPreferredSize());
 		judgingImg.setBounds((this.getWidth() - judgingImg.getWidth())/2, profileBtn.getY() + profileBtn.getHeight() + 15, judgingImg.getHeight(), judgingImg.getHeight());
 		
-		mdes.setBounds(judgingImg.getX(), judgingImg.getY() - 30, 200, 20);
+		mdes.setSize(mdes.getPreferredSize());
+		mdes.setBounds((judgingImg.getX() - mdes.getWidth())/2, judgingImg.getY() - 30, 200, 20);
 		
 		passBtn.setBounds(judgingImg.getX(), judgingImg.getY() + judgingImg.getHeight() + this.getHeight()*2/150, judgingImg.getWidth()/2, judgingImg.getHeight()/8);
 		likeBtn.setBounds(judgingImg.getX() + judgingImg.getWidth()/2, passBtn.getY(), judgingImg.getWidth()/2, judgingImg.getHeight()/8);
@@ -389,12 +393,12 @@ public class MainGui extends JFrame implements ActionListener{
 		
 		pdes = new JLabel("");
 		pdes.setForeground(GuiData.getTextColor());
-		pdes.setFont(GuiData.getCornerFont());
+		pdes.setFont(GuiData.getUserPassFont());
 		backp.add(pdes);
 		
 		plikes = new JLabel("");
 		plikes.setForeground(GuiData.getTextColor());
-		plikes.setFont(GuiData.getCornerFont());
+		plikes.setFont(GuiData.getUserPassFont());
 		backp.add(plikes);
 	}
 	
@@ -409,6 +413,21 @@ public class MainGui extends JFrame implements ActionListener{
 	
 	void updateProfile(boolean b){
 		backp.setVisible(b);
+	}
+	
+	void updatePBS(){
+		int counter = 0;
+		pictureIDs = connector.PicturesIds();
+		for(Picture picture : pictureIDs){
+			pbtn.add(new JButton());
+			pbtn.get(counter).setBackground(GuiData.getNeutralColor());
+			noimg = picture.getImage();
+			pbtn.get(counter).setIcon(new ImageIcon(noimg.getScaledInstance(120, 120, Image.SCALE_DEFAULT)));
+			pbtn.get(counter).setSize(scrollPanel.getWidth() - 10, scrollPanel.getWidth());
+			pbtn.get(counter).addActionListener(this);
+			scrollPanel.add(pbtn.get(counter));
+			counter++;
+		}
 	}
 	
 }
