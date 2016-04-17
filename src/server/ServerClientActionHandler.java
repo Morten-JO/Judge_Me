@@ -146,6 +146,10 @@ public class ServerClientActionHandler {
 					client.getSender().fastSend("ok receive");
 					ServerPicture.pictureId++;
 					hand.close();
+					client.getProfile().addOwnUploadedId(prof.getId());
+					hand = new ServerTextFileHandler(ServerTextFileHandler.userDataPath+client.getProfile().getName()+".txt", true);
+					hand.writeToServerDataFile(client.getProfile());
+					hand.close();
 				}
 				else{
 					System.out.println("IMAGE IS NULL");
@@ -169,6 +173,10 @@ public class ServerClientActionHandler {
 					hand.writeToServerPicture(prof, "png");
 					client.getSender().fastSend("ok receive");
 					ServerPicture.pictureId++;
+					hand.close();
+					client.getProfile().addOwnUploadedId(prof.getId());
+					hand = new ServerTextFileHandler(ServerTextFileHandler.userDataPath+client.getProfile().getName()+".txt", true);
+					hand.writeToServerDataFile(client.getProfile());
 					hand.close();
 				}
 				else{
