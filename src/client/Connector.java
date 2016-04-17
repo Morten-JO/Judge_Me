@@ -79,15 +79,15 @@ public class Connector {
 			try{
 				os.writeBytes("create "+username+" "+password+" "+gender+" "+email+"\r\n");
 				String answer = in.readLine();
-				if (answer ==  "ok create"){
+				if (answer.equals("ok create")){
 					back ="User is create and login successful";
 				}
-					else if ( answer == "bad name create") {
-						back ="user already exists";
-					}
-					else if ( answer == "bad password create"){
-						back = "password to weak";
-					}
+				else if (answer.equals("bad name create")) {
+					back ="user already exists";
+				}
+				else if (answer.equals("bad password create")){
+					back = "password to weak";
+				}
 						
 			}
 			catch (IOException e){

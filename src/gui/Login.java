@@ -193,9 +193,11 @@ public class Login {
 			{
 				if(match() && contains()){
 				
-					 String s = connecter.createUser(textField1.getText(), textField2.getText(), textField6.getText(), textField3.getText()); 
-					 if(s == "ok")
+					 String s = connecter.createUser(textField1.getText(), textField2.getText(), textField6.getText(), textField3.getText());
+					 System.out.println(s);
+					 if(s.equals("User is create and login successful"))
 					 {
+						 //window should become smaller
 						panel.setVisible(false);
 						btnCreateAccount.setVisible(true);
 						loginButton.setVisible(true);
@@ -299,7 +301,7 @@ public class Login {
 	}
 	
 	public boolean match(){
-		return textField2 == textField3 && textField4 == textField5;
+		return textField2.getText().equals(textField3.getText()) && textField4.getText().equals(textField5.getText());
 	}
 	
 	public boolean contains(){

@@ -220,9 +220,9 @@ public class MainGui extends JFrame implements ActionListener{
 				
 				String des = JOptionPane.showInputDialog(this, "What Sholud the description for your picture be?", null);
 				
-				if(loggedInProfile.getGender().toLowerCase() == "male"){
+				if(loggedInProfile.getGender().toLowerCase().equals("male")){
 					connector.uploadPictureBoy(des, path);
-				} else if(loggedInProfile.getGender().toLowerCase() == "female"){
+				} else if(loggedInProfile.getGender().toLowerCase().equals("female")){
 					connector.uploadPictureGirl(des, path);
 				}
 			}
