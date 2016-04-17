@@ -196,15 +196,15 @@ public class MainGui extends JFrame implements ActionListener{
 			updateFrame();
 			
 		} else if(e.getSource() == likeBtn){
-		
-			if(connector.likePicture()){
+			
 				connector.likePicture();
 				checkAndSelect();
-			} else if(e.getSource() == passBtn){
+
+		} else if(e.getSource() == passBtn){
+			
 				connector.dislikePicture();
 				checkAndSelect();
-			}
-			
+				
 		} else if(e.getSource() == browse){
 			
 			JFileChooser file = new JFileChooser();
@@ -272,7 +272,7 @@ public class MainGui extends JFrame implements ActionListener{
 		
 		img2height = (this.getHeight() - (profileBtn.getY() + profileBtn.getHeight())) * 75 / 100;
 		img2 = img1.getScaledInstance(img2height, img2height/img2ratio, Image.SCALE_SMOOTH);
-		judgingImg.setIcon(new ImageIcon(imgp));
+		judgingImg.setIcon(new ImageIcon(img2));
 		judgingImg.setSize(judgingImg.getPreferredSize());
 		judgingImg.setBounds((this.getWidth() - judgingImg.getWidth())/2, profileBtn.getY() + profileBtn.getHeight() + 15, judgingImg.getHeight(), judgingImg.getHeight());
 		
