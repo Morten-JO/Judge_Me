@@ -221,9 +221,9 @@ public class Login {
 		loginFail.setFont(GuiData.getCornerFont());
 		loginFail.setForeground(Color.red);
 		loginFail.setSize(loginFail.getPreferredSize());
+		loginFail.setText("");
 		loginFail.setBounds(password.getX(),20, loginFail.getWidth(), loginFail.getHeight());
 		frame.getContentPane().add(loginFail);
-		loginFail.setVisible(false);
 
 		btnCreateAccount = new JButton("Create Profile");
 		btnCreateAccount.addActionListener(new ActionListener() {
@@ -245,8 +245,7 @@ public class Login {
 			{
 				
 				
-				if(!usernameTxtField.getText().isEmpty() && !passwordTxtField.getText().isEmpty()) 
-				{	
+				if(!usernameTxtField.getText().isEmpty() && !passwordTxtField.getText().isEmpty()) {	
 					System.out.println(passwordTxtField.getText());
 					accessConfirmed = connecter.login(usernameTxtField.getText(), passwordTxtField.getText());
 					MainGui mg = new MainGui(connecter);
@@ -255,18 +254,14 @@ public class Login {
 					{
 						frame.dispose();
 						mg.setVisible(true);
-					}
-					else
-					{
+					} else {
 						System.out.println("Could not login either the username or password is wrong");
-						loginFail.setVisible(true);
+						loginFail.setText("Sorry either your username or password is wrong");
 						passwordTxtField.setText("");
 					}
 				
-				}
-				else
-				{
-					System.out.println("Thefields can not be empty");
+				} else {
+					loginFail.setText("Sorry fields must not be empty");
 				}
 			}
 		});

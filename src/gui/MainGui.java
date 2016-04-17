@@ -100,7 +100,7 @@ public class MainGui extends JFrame implements ActionListener{
 		profileName.setForeground(GuiData.getTextColor());
 		back.add(profileName);
 		
-		browse = new JButton("Browse");
+		browse = new JButton("Upload Picture");
 		browse.setSize(browse.getPreferredSize());
 		browse.addActionListener(this);
 		back.add(browse);
