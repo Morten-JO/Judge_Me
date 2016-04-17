@@ -17,6 +17,10 @@ public class Picture {
 		this.description = des;
 	}
 	
+	public String getDes(){
+		return description;
+	}
+	
 	public int getID(){
 		return ID;
 	}

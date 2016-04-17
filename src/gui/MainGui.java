@@ -25,7 +25,7 @@ public class MainGui extends JFrame implements ActionListener{
 	private List<JButton> pbtn = new ArrayList<JButton>();
 	private JPanel contentPane;
 	private JButton genderMaleBtn, genderFemaleBtn, likeBtn, passBtn, profileBtn, browse, backBtnp;
-	private JLabel profileName, profilePicture, judgingImg, title, back, backp, profileNamep, profilePicturep, imgpLabel;
+	private JLabel profileName, profilePicture, judgingImg, title, back, backp, profileNamep, profilePicturep, imgpLabel, pdes, plikes;
 	private Image img = getProfilePicture();
 	private Image img1 = new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
 	private Image img2, imgp, noimg;
@@ -217,10 +217,23 @@ public class MainGui extends JFrame implements ActionListener{
 				//connector.uploadPictureGirl(des, path);
 			}
 		} else if(e.getSource() == backBtnp){
+			
 			updateProfile(false);
 			updateMain(true);
-			
-			
+		
+		}
+		int cnt = 0;
+		for(JButton btn : pbtn){
+			if(e.getSource() == btn){
+				
+				imgpLabel.setIcon(new ImageIcon(pictureIDs[cnt].getImage().getScaledInstance(img2height, img2height/imgpRatio, Image.SCALE_SMOOTH)));
+				pdes.setText(pictureIDs[cnt].getDes());
+				pdes.setSize(pdes.getPreferredSize());
+				
+				plikes.setText("Likes: " + pictureIDs[cnt].getLikes());
+				plikes.setSize(plikes.getPreferredSize());
+			}
+			cnt++;
 		}
 		
 	}
@@ -263,6 +276,10 @@ public class MainGui extends JFrame implements ActionListener{
 		imgpLabel.setIcon(new ImageIcon(imgp));
 		imgpLabel.setSize(imgpLabel.getPreferredSize());
 		imgpLabel.setBounds((this.getWidth() - imgpLabel.getWidth())/4, profileBtn.getY() + profileBtn.getHeight() + 15, imgpLabel.getHeight(), imgpLabel.getHeight());
+		
+		pdes.setBounds(imgpLabel.getX(), imgpLabel.getY() + imgpLabel.getHeight() + 15, 0, 0);
+		
+		plikes.setBounds(pdes.getX(), pdes.getY() + pdes.getHeight() + 10, 0, 0);
 		
 		scroll.setBounds(imgpLabel.getX() + imgpLabel.getWidth() + 20, imgpLabel.getY(), imgpLabel.getWidth()/2, imgpLabel.getHeight());
 	}
@@ -313,6 +330,7 @@ public class MainGui extends JFrame implements ActionListener{
 		
 		backBtnp = new JButton("Back");
 		backBtnp.setSize(backBtnp.getPreferredSize());
+		backBtnp.setBackground(GuiData.getNeutralColor());
 		backBtnp.addActionListener(this);
 		backp.add(backBtnp);
 		
@@ -333,9 +351,11 @@ public class MainGui extends JFrame implements ActionListener{
 		pictureIDs = connector.PicturesIds();
 		for(Picture picture : pictureIDs){
 			pbtn.add(new JButton());
+			pbtn.get(counter).setBackground(GuiData.getNeutralColor());
 			noimg = picture.getImage();
-			pbtn.get(counter).setIcon(new ImageIcon(noimg));
+			pbtn.get(counter).setIcon(new ImageIcon(noimg.getScaledInstance(120, 120, Image.SCALE_DEFAULT)));
 			pbtn.get(counter).setSize(scrollPanel.getWidth() - 10, scrollPanel.getWidth());
+			pbtn.get(counter).addActionListener(this);
 			scrollPanel.add(pbtn.get(counter));
 			counter++;
 		}
@@ -344,6 +364,12 @@ public class MainGui extends JFrame implements ActionListener{
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		backp.add(scroll);
+		
+		pdes = new JLabel("");
+		backp.add(pdes);
+		
+		plikes = new JLabel("");
+		backp.add(plikes);
 	}
 	
 	void updateMain(boolean b){
