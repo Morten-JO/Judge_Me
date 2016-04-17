@@ -2,12 +2,12 @@ package gui;
 
 import javax.swing.JPanel;
 
-public class profilePanel extends JPanel {
+public class ProfilePanel extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public profilePanel() 
+	public ProfilePanel() 
 	{
 		
 
