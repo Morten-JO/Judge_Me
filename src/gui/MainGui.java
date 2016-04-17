@@ -1,7 +1,7 @@
 package gui;
 
 import java.awt.*;
-
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -17,22 +17,28 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainGui extends JFrame implements ActionListener{
 
+	private Picture[] pictureIDs;
+	private List<JButton> pbtn = new ArrayList<JButton>();
 	private JPanel contentPane;
-	private JButton genderMaleBtn, genderFemaleBtn, likeBtn, passBtn, profileBtn, browse;
-	private JLabel profileName, profilePicture, judgingImg, title, back;
+	private JButton genderMaleBtn, genderFemaleBtn, likeBtn, passBtn, profileBtn, browse, backBtnp;
+	private JLabel profileName, profilePicture, judgingImg, title, back, backp, profileNamep, profilePicturep, imgpLabel;
 	private Image img = getProfilePicture();
 	private Image img1 = new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
-	private Image img2;
+	private Image img2, imgp, noimg;
+	private Image pimg = new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
 	private String currentGender;
-	private int img2ratio;
+	private int img2ratio, imgpRatio;
 	private int img2height = 500;
 	private Connector connect;
 	private Profile loggedInProfile;
 	private Connector connector;
 	private Image backimg = new ImageIcon(this.getClass().getResource("/Background.jpg")).getImage();
+	private JPanel scrollPanel;
+	private JScrollPane scroll;
 
 	/**
 	 * Create the frame.
@@ -41,13 +47,15 @@ public class MainGui extends JFrame implements ActionListener{
 	public MainGui(Connector connector) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 700);
+		setTitle("Judge Me");
 		contentPane = new JPanel();
 		//contentPane.setBackground(SystemColor.textHighlight);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 			this.connector = connector;
-		initialize();
+		initializeMain();
+		initializeProfile();
 		this.getRootPane().addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
 				// This is only called when the user releases the mouse button.
@@ -56,7 +64,7 @@ public class MainGui extends JFrame implements ActionListener{
 		});
 	}
 
-	void initialize(){
+	void initializeMain(){
 		setLayout(null);
 		
 		loggedInProfile = new Profile("NAVN", "GENDER", "MAIL");
@@ -106,15 +114,8 @@ public class MainGui extends JFrame implements ActionListener{
 		profileBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				ProfilePanel pp = null;
-				try {
-					pp = new ProfilePanel(connector);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				pp.setVisible(true);
-				setContentPane(pp);
+				updateMain(false);
+				updateProfile(true);
 			}
 		});
 		back.add(profileBtn);
@@ -138,6 +139,7 @@ public class MainGui extends JFrame implements ActionListener{
 			
 		passBtn = new JButton("Pass");
 		passBtn.setBackground(GuiData.getNeutralColor());
+		passBtn.addActionListener(this);
 		back.add(passBtn);
 
 		likeBtn = new JButton("Like");
@@ -214,8 +216,9 @@ public class MainGui extends JFrame implements ActionListener{
 				}
 				//connector.uploadPictureGirl(des, path);
 			}
-		} else if(e.getSource() == profileBtn){
-			
+		} else if(e.getSource() == backBtnp){
+			updateProfile(false);
+			updateMain(true);
 			
 			
 		}
@@ -226,7 +229,7 @@ public class MainGui extends JFrame implements ActionListener{
 		
 		
 		back.setBounds(0, 0, back.getWidth(), back.getHeight());
-		
+		backp.setBounds(0, 0, back.getWidth(), back.getHeight());
 		
 		genderMaleBtn.setBounds(10, 10, genderMaleBtn.getWidth(), genderMaleBtn.getHeight());
 		
@@ -235,8 +238,10 @@ public class MainGui extends JFrame implements ActionListener{
 		title.setBounds((this.getWidth()-title.getWidth())/2, 10, title.getWidth(), title.getHeight());
 		
 		profilePicture.setBounds(this.getWidth() - profilePicture.getWidth()- 30, 10, profilePicture.getWidth(), profilePicture.getHeight());
+		profilePicturep.setBounds(this.getWidth() - profilePicture.getWidth()- 30, 10, profilePicture.getWidth(), profilePicture.getHeight());
 		
 		profileName.setBounds(profilePicture.getX() - profileName.getWidth() - 15, profilePicture.getY() + (profilePicture.getHeight()-profileName.getHeight())/2, profileName.getWidth(), profileName.getHeight());
+		profileNamep.setBounds(profilePicture.getX() - profileName.getWidth() - 15, profilePicture.getY() + (profilePicture.getHeight()-profileName.getHeight())/2, profileName.getWidth(), profileName.getHeight());
 		
 		profileBtn.setBounds(profilePicture.getX() + profilePicture.getWidth() - profileBtn.getWidth(), profilePicture.getY() + profilePicture.getHeight() + 10, profileBtn.getWidth(), profileBtn.getHeight());
 		
@@ -244,12 +249,22 @@ public class MainGui extends JFrame implements ActionListener{
 		
 		img2height = (this.getHeight() - (profileBtn.getY() + profileBtn.getHeight())) * 75 / 100;
 		img2 = img1.getScaledInstance(img2height, img2height/img2ratio, Image.SCALE_SMOOTH);
-		judgingImg.setIcon(new ImageIcon(img2));
+		judgingImg.setIcon(new ImageIcon(imgp));
 		judgingImg.setSize(judgingImg.getPreferredSize());
 		judgingImg.setBounds((this.getWidth() - judgingImg.getWidth())/2, profileBtn.getY() + profileBtn.getHeight() + 15, judgingImg.getHeight(), judgingImg.getHeight());
 		
 		passBtn.setBounds(judgingImg.getX(), judgingImg.getY() + judgingImg.getHeight() + this.getHeight()*2/150, judgingImg.getWidth()/2, judgingImg.getHeight()/8);
 		likeBtn.setBounds(judgingImg.getX() + judgingImg.getWidth()/2, passBtn.getY(), judgingImg.getWidth()/2, judgingImg.getHeight()/8);
+		
+		//Profile
+		backBtnp.setBounds(10, 10, backBtnp.getWidth(), backBtnp.getHeight());
+
+		imgp = pimg.getScaledInstance(img2height, img2height/imgpRatio, Image.SCALE_SMOOTH);
+		imgpLabel.setIcon(new ImageIcon(imgp));
+		imgpLabel.setSize(imgpLabel.getPreferredSize());
+		imgpLabel.setBounds((this.getWidth() - imgpLabel.getWidth())/4, profileBtn.getY() + profileBtn.getHeight() + 15, imgpLabel.getHeight(), imgpLabel.getHeight());
+		
+		scroll.setBounds(imgpLabel.getX() + imgpLabel.getWidth() + 20, imgpLabel.getY(), imgpLabel.getWidth()/2, imgpLabel.getHeight());
 	}
 	
 	void setLoggedInProfile(Profile profile){
@@ -277,4 +292,71 @@ public class MainGui extends JFrame implements ActionListener{
 			checkAndSelectFemale();
 		}
 	}
+	
+	void initializeProfile(){
+		backp = new JLabel("");
+		backp.setIcon(new ImageIcon(backimg));
+		backp.setSize(backp.getPreferredSize());
+		add(backp);
+		backp.setVisible(false);
+		
+		profilePicturep = new JLabel("");
+		profilePicturep.setIcon(new ImageIcon(img));
+		profilePicturep.setSize(profilePicturep.getPreferredSize());
+		backp.add(profilePicturep);
+		
+		profileNamep = new JLabel("PROFILENAME");
+		profileNamep.setFont(GuiData.getCornerFont());
+		profileNamep.setSize(profileNamep.getPreferredSize());
+		profileNamep.setForeground(GuiData.getTextColor());
+		backp.add(profileNamep);
+		
+		backBtnp = new JButton("Back");
+		backBtnp.setSize(backBtnp.getPreferredSize());
+		backBtnp.addActionListener(this);
+		backp.add(backBtnp);
+		
+		imgpLabel = new JLabel("");
+		imgpLabel.setIcon(new ImageIcon(pimg));
+		imgpLabel.setSize(imgpLabel.getPreferredSize());
+		imgpRatio = imgpLabel.getHeight()/imgpLabel.getWidth();
+		
+		imgp = pimg.getScaledInstance(img2height, img2height/imgpRatio, Image.SCALE_DEFAULT);
+		imgpLabel.setIcon(new ImageIcon(imgp));
+		imgpLabel.setSize(imgpLabel.getPreferredSize());
+		backp.add(imgpLabel);
+		
+		scrollPanel = new JPanel();
+		scrollPanel.setLayout(new GridLayout(0,1));
+		int counter = 0;
+		
+		pictureIDs = connector.PicturesIds();
+		for(Picture picture : pictureIDs){
+			pbtn.add(new JButton());
+			noimg = picture.getImage();
+			pbtn.get(counter).setIcon(new ImageIcon(noimg));
+			pbtn.get(counter).setSize(scrollPanel.getWidth() - 10, scrollPanel.getWidth());
+			scrollPanel.add(pbtn.get(counter));
+			counter++;
+		}
+		
+		scroll = new JScrollPane(scrollPanel);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		backp.add(scroll);
+	}
+	
+	void updateMain(boolean b){
+		back.setVisible(b);
+		if(!b){
+			this.setSize(1000, 700);
+		} else{
+			this.setSize(700, 700);
+		}
+	}
+	
+	void updateProfile(boolean b){
+		backp.setVisible(b);
+	}
+	
 }

@@ -37,7 +37,7 @@ public class ProfilePanel extends JPanel {
 	 * @throws IOException 
 	 */
 	public ProfilePanel(Connector connector) throws IOException {
-		setBounds(100, 100, 700, 700);
+		setBounds(100, 100, 1100, 700);
 		contentPane = new JPanel();
 		//contentPane.setBackground(SystemColor.textHighlight);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
