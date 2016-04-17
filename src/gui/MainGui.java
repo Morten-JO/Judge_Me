@@ -106,7 +106,13 @@ public class MainGui extends JFrame implements ActionListener{
 		profileBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				ProfilePanel pp = new ProfilePanel(connector);
+				ProfilePanel pp = null;
+				try {
+					pp = new ProfilePanel(connector);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				pp.setVisible(true);
 				setContentPane(pp);
 			}
