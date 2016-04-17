@@ -1,1 +1,1 @@
-8 1 0 male mar1
+8 10 2 female girl4

@@ -205,7 +205,6 @@ public class Connector {
 			sendMsg("upload boy "+des+"\r\n");
 			System.out.println("second");
 			String result = in.readLine();
-			System.out.println("third");
 			System.out.println(result);
 			if(result.equals("ok start send")){
 				System.out.println("fourth");

@@ -27,9 +27,9 @@ public class MainGui extends JFrame implements ActionListener{
 	private JButton genderMaleBtn, genderFemaleBtn, likeBtn, passBtn, profileBtn, browse, backBtnp;
 	private JLabel profileName, profilePicture, judgingImg, title, back, backp, profileNamep, profilePicturep, imgpLabel, pdes, plikes, mdes;
 	private Image img = getProfilePicture();
-	private Image img1 = new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
+	private Image img1 = new ImageIcon(this.getClass().getResource("/mar.png")).getImage();
 	private Image img2, imgp, noimg;
-	private Image pimg = new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
+	private Image pimg = new ImageIcon(this.getClass().getResource("/mar.png")).getImage();
 	private String currentGender;
 	private int img2ratio, imgpRatio;
 	private int img2height = 500;
@@ -161,7 +161,7 @@ public class MainGui extends JFrame implements ActionListener{
 	}
 	
 	private Image getProfilePicture() {
-		Image img =  new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
+		Image img =  new ImageIcon(this.getClass().getResource("/mar.png")).getImage();
 		img = img.getScaledInstance(60, 60, Image.SCALE_DEFAULT);
 		return img;
 	}
@@ -200,11 +200,13 @@ public class MainGui extends JFrame implements ActionListener{
 			
 				connector.likePicture();
 				checkAndSelect();
+				updateFrame();
 
 		} else if(e.getSource() == passBtn){
 			
 				connector.dislikePicture();
 				checkAndSelect();
+				updateFrame();
 				
 		} else if(e.getSource() == browse){
 			
@@ -226,8 +228,7 @@ public class MainGui extends JFrame implements ActionListener{
 				} else if(loggedInProfile.getGender().toLowerCase().equals("female")){
 					connector.uploadPictureGirl(des, path);
 				}
-				
-				pictureIDs = connector.PicturesIds();
+					
 				
 			}
 		} else if(e.getSource() == backBtnp){
@@ -296,7 +297,7 @@ public class MainGui extends JFrame implements ActionListener{
 		
 		pdes.setBounds(imgpLabel.getX(), imgpLabel.getY() + imgpLabel.getHeight() + 15, 0, 0);
 		
-		plikes.setBounds(pdes.getX(), pdes.getY() + pdes.getHeight() + 10, 0, 0);
+		plikes.setBounds(pdes.getX(), pdes.getY() + pdes.getHeight() + 20, 0, 0);
 		
 		scroll.setBounds(imgpLabel.getX() + imgpLabel.getWidth() + 20, imgpLabel.getY(), imgpLabel.getWidth()/2, imgpLabel.getHeight());
 	}
