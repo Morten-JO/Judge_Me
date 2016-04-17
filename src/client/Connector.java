@@ -92,14 +92,16 @@ public class Connector {
 	}
 	
 	
-	public Picture selectMale () {
+	public Boolean selectMale () {
+		Boolean res = false;
 		try {
+			
 			sendMsg("picture boy\r\n");
 			String test = in.readLine();
 			System.out.println("test: "+test);
 			if (test.startsWith("ok")){
 				String info = in.readLine();
-				
+				res = true;
 				int id = Integer.parseInt(info.split(" ")[1]);
 				String gender = info.split(" ")[2];
 				int likes = Integer.parseInt(info.split(" ")[3]);
@@ -109,22 +111,25 @@ public class Connector {
 				BufferedImage image = ImageIO.read(s.getInputStream());
 				pic = new Picture (image,id,gender,likes,dislikes,des);
 				in.readLine();
-				return pic;
+				
 			}
+			res = false;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return res;
+		
 	}
 	
-	public Picture selectFemale () {
+	public Boolean selectFemale () {
+		boolean res = false;
 		try {
 			sendMsg("picture girl\r\n");
 			String test = in.readLine();
 			if (test.startsWith("ok")){
 				String info = in.readLine();
-				
+				res = true;
 				int id = Integer.parseInt(info.split(" ")[1]);
 				String gender = info.split(" ")[2];
 				int likes = Integer.parseInt(info.split(" ")[3]);
@@ -134,13 +139,13 @@ public class Connector {
 				BufferedImage image = ImageIO.read(s.getInputStream());
 				pic = new Picture (image,id,gender,likes,dislikes,des);
 				in.readLine(); 
-				return pic;
+				
 		}
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	return null;
+	return res;
 	}
 	
 	public boolean likePicture(){
