@@ -97,11 +97,12 @@ public class MainGui extends JFrame implements ActionListener{
 		back.add(title);
 		
 		profilePicture = new JLabel("");
-		if(loggedInProfile.getGender() == "Male"){
+		if(loggedInProfile.getGender().toLowerCase() == "male"){
 			profilePicture.setBackground(GuiData.getMaleColor());
-		}else if(loggedInProfile.getGender() == "Female"){
+		}else if(loggedInProfile.getGender().toLowerCase() == "female"){
 			profilePicture.setBackground(GuiData.getFemaleColor());
 		}
+		profilePicture.setOpaque(true);
 		profilePicture.setSize(60, 60);
 		back.add(profilePicture);
 		
@@ -212,9 +213,9 @@ public class MainGui extends JFrame implements ActionListener{
 				
 				String des = JOptionPane.showInputDialog(this, "What Sholud the description for your picture be?", null);
 				
-				if(loggedInProfile.getGender() == "Male"){
+				if(loggedInProfile.getGender().toLowerCase() == "male"){
 					connector.uploadPictureBoy(des, path);
-				} else if(loggedInProfile.getGender() == "Female"){
+				} else if(loggedInProfile.getGender().toLowerCase() == "female"){
 					connector.uploadPictureGirl(des, path);
 				}
 			}
@@ -320,11 +321,12 @@ public class MainGui extends JFrame implements ActionListener{
 		backp.setVisible(false);
 		
 		profilePicturep = new JLabel("");
-		if(loggedInProfile.getGender() == "Male"){
+		if(loggedInProfile.getGender().toLowerCase() == "male"){
 			profilePicturep.setBackground(GuiData.getMaleColor());
-		}else if(loggedInProfile.getGender() == "Female"){
+		}else if(loggedInProfile.getGender().toLowerCase() == "female"){
 			profilePicturep.setBackground(GuiData.getFemaleColor());
 		}
+		profilePicturep.setOpaque(true);
 		profilePicturep.setSize(60, 60);
 		backp.add(profilePicturep);
 		
