@@ -25,7 +25,7 @@ public class MainGui extends JFrame implements ActionListener{
 	private List<JButton> pbtn = new ArrayList<JButton>();
 	private JPanel contentPane;
 	private JButton genderMaleBtn, genderFemaleBtn, likeBtn, passBtn, profileBtn, browse, backBtnp;
-	private JLabel profileName, profilePicture, judgingImg, title, back, backp, profileNamep, profilePicturep, imgpLabel, pdes, plikes;
+	private JLabel profileName, profilePicture, judgingImg, title, back, backp, profileNamep, profilePicturep, imgpLabel, pdes, plikes, mdes;
 	private Image img = getProfilePicture();
 	private Image img1 = new ImageIcon(this.getClass().getResource("/man.jpg")).getImage();
 	private Image img2, imgp, noimg;
@@ -141,6 +141,12 @@ public class MainGui extends JFrame implements ActionListener{
 		judgingImg.setSize(judgingImg.getPreferredSize());
 		back.add(judgingImg);
 			
+		mdes = new JLabel();
+		mdes.setForeground(GuiData.getTextColor());
+		mdes.setFont(GuiData.getCornerFont());
+		mdes.setBounds(judgingImg.getX(), judgingImg.getY() - 30, 200, 20);
+		back.add(mdes);
+		
 		passBtn = new JButton("Pass");
 		passBtn.setBackground(GuiData.getNeutralColor());
 		passBtn.addActionListener(this);
@@ -184,6 +190,7 @@ public class MainGui extends JFrame implements ActionListener{
 			currentGender = "Female";
 			if(connector.selectFemale()){
 				Picture picy = connector.getPicture();
+				mdes.setText(picy.getDes());
 				img1 = picy.getImage();
 			}
 			updateFrame();
@@ -233,7 +240,7 @@ public class MainGui extends JFrame implements ActionListener{
 				pdes.setText(pictureIDs[cnt].getDes());
 				pdes.setSize(pdes.getPreferredSize());
 				
-				plikes.setText("Likes: " + pictureIDs[cnt].getLikes());
+				plikes.setText("Like Ratio: " + (double) pictureIDs[cnt].getLikes() / (double) pictureIDs[cnt].getPasses());
 				plikes.setSize(plikes.getPreferredSize());
 			}
 			cnt++;
@@ -268,6 +275,8 @@ public class MainGui extends JFrame implements ActionListener{
 		judgingImg.setIcon(new ImageIcon(imgp));
 		judgingImg.setSize(judgingImg.getPreferredSize());
 		judgingImg.setBounds((this.getWidth() - judgingImg.getWidth())/2, profileBtn.getY() + profileBtn.getHeight() + 15, judgingImg.getHeight(), judgingImg.getHeight());
+		
+		mdes.setBounds(judgingImg.getX(), judgingImg.getY() - 30, 200, 20);
 		
 		passBtn.setBounds(judgingImg.getX(), judgingImg.getY() + judgingImg.getHeight() + this.getHeight()*2/150, judgingImg.getWidth()/2, judgingImg.getHeight()/8);
 		likeBtn.setBounds(judgingImg.getX() + judgingImg.getWidth()/2, passBtn.getY(), judgingImg.getWidth()/2, judgingImg.getHeight()/8);
@@ -374,9 +383,13 @@ public class MainGui extends JFrame implements ActionListener{
 		backp.add(scroll);
 		
 		pdes = new JLabel("");
+		pdes.setForeground(GuiData.getTextColor());
+		pdes.setFont(GuiData.getCornerFont());
 		backp.add(pdes);
 		
 		plikes = new JLabel("");
+		plikes.setForeground(GuiData.getTextColor());
+		plikes.setFont(GuiData.getCornerFont());
 		backp.add(plikes);
 	}
 	
