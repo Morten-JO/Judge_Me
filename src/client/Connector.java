@@ -218,6 +218,10 @@ public class Connector {
 		}
 		return false;
 	}
+	public Picture getPicture (){
+		return pic;
+		
+	}
 }
 	
 	
