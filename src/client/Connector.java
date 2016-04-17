@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 
 
 import functionality.Picture;
+import functionality.Profile;
 
 public class Connector {
 	private Socket s = null; 
@@ -59,6 +60,20 @@ public class Connector {
 		
 		return result;
 	}
+	
+	public Profile profileOfLogin(){
+		try {
+			os.writeBytes("profiledata\r\n");
+			String answer = in.readLine();
+			String[] bits = answer.split(" ");
+			Profile prof = new Profile(bits[0], bits[2], bits[3]);
+			return prof;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public String createUser(String username, String password, String gender, String email){
 			String back = null;
 			try{
@@ -106,7 +121,8 @@ public class Connector {
 				String gender = info.split(" ")[2];
 				int likes = Integer.parseInt(info.split(" ")[3]);
 				int dislikes = Integer.parseInt(info.split(" ")[4]);
-				String des = info.split(" ")[5];
+				String[] splits = info.split(" ");
+				String des = info.substring(5 + splits[0].length() + splits[1].length() + splits[2].length() + splits[3].length() + splits[4].length(), info.length()-17);
 				
 				BufferedImage image = ImageIO.read(s.getInputStream());
 				pic = new Picture (image,id,gender,likes,dislikes,des);
@@ -134,7 +150,8 @@ public class Connector {
 				String gender = info.split(" ")[2];
 				int likes = Integer.parseInt(info.split(" ")[3]);
 				int dislikes = Integer.parseInt(info.split(" ")[4]);
-				String des = info.split(" ")[5];
+				String[] splits = info.split(" ");
+				String des = info.substring(5 + splits[0].length() + splits[1].length() + splits[2].length() + splits[3].length() + splits[4].length(), info.length()-17);
 				
 				BufferedImage image = ImageIO.read(s.getInputStream());
 				pic = new Picture (image,id,gender,likes,dislikes,des);
@@ -262,7 +279,8 @@ public class Connector {
 				String gender = info.split(" ")[2];
 				int likes = Integer.parseInt(info.split(" ")[3]);
 				int dislikes = Integer.parseInt(info.split(" ")[4]);
-				String des = info.split(" ")[5];
+				String[] splits = info.split(" ");
+				String des = info.substring(5 + splits[0].length() + splits[1].length() + splits[2].length() + splits[3].length() + splits[4].length(), info.length() - 17);
 				
 				
 				try {

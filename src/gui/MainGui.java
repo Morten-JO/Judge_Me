@@ -198,7 +198,7 @@ public class MainGui extends JFrame implements ActionListener{
 			
 			JFileChooser file = new JFileChooser();
 			file.setCurrentDirectory(new File(System.getProperty("user.home")));
-			FileNameExtensionFilter filter = new FileNameExtensionFilter("Images","jpg");
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Images","png");
 			file.addChoosableFileFilter(filter);
 			file.setAcceptAllFileFilterUsed(false);
 			int result = file.showSaveDialog(null);

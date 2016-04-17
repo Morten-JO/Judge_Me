@@ -81,7 +81,7 @@ public class Login {
 		frame.getContentPane().setLayout(null);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
+		frame.setTitle("Judge Me");
 		panel = new JPanel();
 		panel.setBounds(0, 0, 450, 600);
 		panel.setBackground(SystemColor.textHighlight);

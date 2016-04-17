@@ -267,6 +267,14 @@ public class ServerClientActionHandler {
 				}
 			}
 		}
+		else if(message.startsWith("profiledata")){
+			if(client != null){
+				client.getSender().fastSend(client.getProfile().getName()+ " "+client.getProfile().getPassword()+" "+client.getProfile().getGender()+" "+client.getProfile().getEmail());
+			}
+			else{
+				client.getSender().fastSend("fail profile data");
+			}
+		}
 	}
 	
 }
