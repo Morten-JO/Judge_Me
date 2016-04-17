@@ -61,6 +61,10 @@ public class ServerTextFileHandler {
 		String str = profile.getName()+" "+profile.getPassword()+" "+profile.getGender()+" "+profile.getEmail();
 		for(int i = 0; i < profile.getReviewedPictureIDs().size(); i++){
 			str += " "+profile.getReviewedPictureIDs().get(i);
+		} 
+		str += " uploaded";
+		for(int i = 0; i < profile.getOwnUploadedArrayList().size(); i++){
+			str += " "+profile.getOwnUploadedArrayList().get(i);
 		}
 		try {
 			writer.write(str+"\r\n");
@@ -76,8 +80,17 @@ public class ServerTextFileHandler {
 			String str = reader.readLine();
 			String[] parts = str.split(" ");
 			ServerProfile prof = new ServerProfile(parts[0], parts[1], parts[2], parts[3]);
+			int x = 0;
 			for(int i = 4; i < parts.length; i++){
+				if(parts[i].equals("uploaded")){
+					x = i;
+					break;
+					
+				}
 				prof.addReviewPictureID(Integer.parseInt(parts[i]));
+			}
+			for(int i = x; i < parts.length; i++){
+				prof.addOwnUploadedId(Integer.parseInt(parts[i]));
 			}
 			return prof;
 		} catch (Exception e) {
@@ -122,6 +135,15 @@ public class ServerTextFileHandler {
 			tr = new File("serverimgsfemale/"+id+".png").exists();
 		}
 		return tr;
+	}
+	
+	public static boolean PictureIsGirl(int id){
+		boolean tr = new File("serverimgs/"+id+".png").exists();
+		if(!tr){
+			tr = new File("serverimgsfemale/"+id+".png").exists();
+			return true;
+		}
+		return false;
 	}
 	
 	public static boolean PictureDataExists(int id){

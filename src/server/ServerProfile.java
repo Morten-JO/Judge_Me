@@ -6,6 +6,7 @@ public class ServerProfile {
 	
 	private String name, password, gender, email;
 	
+	private ArrayList<Integer> ownUploadedPictureIds = new ArrayList<Integer>();
 	private ArrayList<Integer> reviewedPictureIDs =  new ArrayList<Integer>();
 	
 	public ServerProfile(String name, String password, String gender, String email){
@@ -58,6 +59,14 @@ public class ServerProfile {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public void addOwnUploadedId(int i){
+		ownUploadedPictureIds.add(i);
+	}
+	
+	public ArrayList<Integer> getOwnUploadedArrayList(){
+		return ownUploadedPictureIds;
 	}
 	
 	
