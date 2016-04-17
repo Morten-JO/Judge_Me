@@ -89,7 +89,7 @@ public class ServerTextFileHandler {
 				}
 				prof.addReviewPictureID(Integer.parseInt(parts[i]));
 			}
-			for(int i = x; i < parts.length; i++){
+			for(int i = x+1; i < parts.length; i++){
 				prof.addOwnUploadedId(Integer.parseInt(parts[i]));
 			}
 			return prof;

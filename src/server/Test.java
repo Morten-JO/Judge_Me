@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import client.Connector;
+import functionality.Picture;
 
 public class Test {
 
@@ -11,8 +12,14 @@ public class Test {
 		try {
 			Connector conn = new Connector();
 			if(conn.login("kristofer", "testpass")){
-				System.out.println("logged in!");
-	//			conn.UploadPictureBoy("suck it fransie", "C:/Users/Morten/Documents/ClassDiagram_CDIO_1.png");
+				Picture[] pics = conn.PicturesIds();
+				System.out.println("Len of pictures: "+pics.length);
+				for(int i = 0; i < pics.length; i++){
+					if(pics[i] != null) {
+						System.out.println("Pics "+i+" is not null");
+						System.out.println(pics[i].getID());
+					}
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

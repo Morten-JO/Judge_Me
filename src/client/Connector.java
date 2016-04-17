@@ -230,7 +230,7 @@ public class Connector {
 	}
 	
 	public Picture[] PicturesIds (){
-		sendMsg("idprofile");
+		sendMsg("idprofile\r\n");
 		String result = null;
 		try {
 			result = in.readLine();
@@ -247,7 +247,7 @@ public class Connector {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			System.out.println("oki received first");
 			if ( ok.equals("ok u get picture")){
 				String info = null;
 				BufferedImage image = null; 
@@ -257,7 +257,7 @@ public class Connector {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+				System.out.println("oki received second");
 				int id = Integer.parseInt(info.split(" ")[1]);
 				String gender = info.split(" ")[2];
 				int likes = Integer.parseInt(info.split(" ")[3]);
@@ -271,6 +271,7 @@ public class Connector {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				System.out.println("oki got picture");
 				pics[i] = new Picture (image,id,gender,likes,dislikes,des);
 				
 				try {
@@ -279,6 +280,7 @@ public class Connector {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				System.out.println("Completed one cycle");
 			}
 		}
 		return pics;
