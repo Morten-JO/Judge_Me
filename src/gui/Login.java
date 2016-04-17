@@ -36,11 +36,12 @@ public class Login {
 	private JTextField textField5;
 	private JTextField textField6;
 	private Connector connecter;
-	private JLabel loginFail;
+	private JLabel loginFail, failLabel;
 	private JButton btnCreateAccount;
 	private JButton loginButton;
 	
 	private boolean accessConfirmed;
+	private boolean profileCreated;
 
 	/**
 	 * Launch the application.
@@ -123,24 +124,25 @@ public class Login {
 		confirmEmail.setBounds(newUsername.getX(), email.getY() + GuiData.getY(), confirmEmail.getWidth(), confirmEmail.getHeight());
 		panel.add(confirmEmail);
 		
-		JLabel Age = new JLabel("Age:");
+		JLabel Age = new JLabel("Gender:");
 		Age.setFont(GuiData.getUserPassFont());
 		Age.setSize(Age.getPreferredSize());
 		Age.setBounds(newUsername.getX(), confirmEmail.getY() + GuiData.getY(), Age.getWidth(), Age.getHeight());
 		panel.add(Age);
-		
 		
 		textField1 = new JTextField();
 		textField1.setBounds(210, 90, 200, 40);
 		panel.add(textField1);
 		textField1.setColumns(10);
 		
-		textField2 = new JTextField();
+//		for password
+		textField2 = new JPasswordField();
 		textField2.setBounds(textField1.getX(), textField1.getY() + GuiData.getY(), 200, 40);
 		panel.add(textField2);
 		textField2.setColumns(10);
 		
-		textField3 = new JTextField();
+//		rewrite password correctly
+		textField3 = new JPasswordField();
 		textField3.setBounds(textField1.getX(), textField2.getY() + GuiData.getY(), 200, 40);
 		panel.add(textField3);
 		textField3.setColumns(10);
@@ -156,6 +158,7 @@ public class Login {
 		textField5.setColumns(10);
 		
 		textField6 = new JTextField();
+		textField6.setText("male or female..");
 		textField6.setBounds(textField1.getX(), textField5.getY() + GuiData.getY(), 200, 40);
 		panel.add(textField6);
 		textField6.setColumns(10);
@@ -177,7 +180,31 @@ public class Login {
 		backButton.setBounds(newUsername.getX(), chckbxNewCheckBox.getY() + GuiData.getY() - 10, 180, 50);
 		panel.add(backButton);
 		
+//		Fail label
+		JLabel failL = new JLabel("");
+		failL.setFont(GuiData.getUserPassFont());
+		failL.setSize(failL.getPreferredSize());
+		failL.setBounds(newUsername.getX(), headline.getY() + 20, failL.getWidth(), failL.getHeight());
+		panel.add(failL);
+		
 		JButton createButton = new JButton("Create");
+		createButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)
+			{
+				if(match() && contains()){
+				
+					 String s = connecter.createUser(textField1.getText(), textField2.getText(), textField6.getText(), textField3.getText()); 
+					 if(s == "ok")
+					 {
+						panel.setVisible(false);
+						btnCreateAccount.setVisible(true);
+						loginButton.setVisible(true);
+					 } else{
+						 failLabel.setText(s);
+					 }
+				}
+			}
+		});
 		createButton.setBounds(newUsername.getX() + backButton.getWidth() + 10, chckbxNewCheckBox.getY() + GuiData.getY() - 10, 180, 50);
 		panel.add(createButton);
 		
@@ -269,6 +296,15 @@ public class Login {
 		frame.getContentPane().add(loginButton);
 		
 	
+	}
+	
+	public boolean match(){
+		return textField2 == textField3 && textField4 == textField5;
+	}
+	
+	public boolean contains(){
+		return !textField1.getText().isEmpty() && !textField2.getText().isEmpty() && !textField3.getText().isEmpty() 
+				&& !textField4.getText().isEmpty() && !textField5.getText().isEmpty() && !textField6.getText().isEmpty();
 	}
 }
 	
