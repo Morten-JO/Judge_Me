@@ -9,9 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-
 import javax.imageio.ImageIO;
+
 
 import functionality.Picture;
 
@@ -230,7 +229,7 @@ public class Connector {
 		
 	}
 	
-	public void PicturesIds (){
+	public Picture[] PicturesIds (){
 		sendMsg("idprofile");
 		String result = null;
 		try {
@@ -239,6 +238,7 @@ public class Connector {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Picture[] pics = new Picture[Integer.parseInt(result.split(" ")[0])];
 		for (int i = 0; i <  Integer.parseInt(result.split(" ")[0]); i++) {
 			String ok = null;
 			try {
@@ -271,7 +271,8 @@ public class Connector {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				pic = new Picture (image,id,gender,likes,dislikes,des);
+				pics[i] = new Picture (image,id,gender,likes,dislikes,des);
+				
 				try {
 					in.readLine();
 				} catch (IOException e) {
@@ -280,6 +281,7 @@ public class Connector {
 				}
 			}
 		}
+		return pics;
 		
 	}
 }
